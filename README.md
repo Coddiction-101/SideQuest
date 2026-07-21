@@ -7,7 +7,7 @@ Each project reflects a different stage of my journey—from small prototypes to
 ## Projects
 
 * GitVerse
-* Quantix
+* [Quantix](https://github.com/Coddiction-101/Quantix)
  
 ---
 
