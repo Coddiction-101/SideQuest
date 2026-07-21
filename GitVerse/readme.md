@@ -96,11 +96,3 @@ GitVerse/
 ## Inspiration
 
 The idea behind GitVerse is simple: every developer spends years building projects, fixing bugs, and making commits. Those contributions deserve more than graphs and statistics. GitVerse reimagines that journey as a universe where every repository becomes a world and every commit leaves its mark among the stars.
-
-## Contributing
-
-Suggestions, ideas, and contributions are always welcome. Feel free to open an issue or submit a pull request.
-
-## License
-
-This project is licensed under the MIT License.
