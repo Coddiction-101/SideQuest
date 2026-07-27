@@ -157,7 +157,4 @@ Interactive Viewer
 - Expand into a universal document viewer
 
 ---
-
-## License
-
-This project is licensed under the MIT License.
+ 
