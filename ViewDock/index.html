@@ -16,42 +16,83 @@
 </head>
 
 <body>
+
     <header class="header">
-        <nav class="nav-container">
+        <nav class="navbar container">
+
             <a href="#" class="logo">Doque</a>
+
             <ul class="nav-links">
-                <li><a href="#">Github</a></li>
+                <li><a href="#">GitHub</a></li>
                 <li><a href="#">About</a></li>
             </ul>
+
         </nav>
     </header>
+
     <main>
-        <section class="hero-container">
+
+        <section class="hero container">
+
             <div class="hero-content">
-                <h1>open document freely</h1>
-                <p> Paste a public PDF link and preview it directly in your browser without downloading it first. </p>
+
+                <h1>Open Documents Instantly</h1>
+
+                <p>
+                    Paste a public PDF link and preview it directly in your browser
+                    without downloading it first.
+                </p>
 
                 <div class="input-group">
-                    <input type="url" placeholder="https://example.com/document.pdf">
-                    <button>Open Document</button>
 
-                    <div class="features">
-                        <span>Rapid Preview</span>
-                        <span>No Download Required</span>
-                        <span>Public PDF</span>
-                    </div>
+                    <label for="pdf-url" class="sr-only">
+                        PDF URL
+                    </label>
 
+                    <input id="pdf-url" type="url" placeholder="https://example.com/document.pdf">
+
+                    <button id="open-btn">
+                        Open Document
+                    </button>
 
                 </div>
+
+                <div class="features">
+                    <span>Public PDFs</span>
+                    <span>Fast Preview</span>
+                    <span>No Download Required</span>
+                </div>
+
             </div>
+
         </section>
+
         <section class="viewer container">
+
             <div class="viewer-placeholder">
+
                 <h2>Document Viewer</h2>
-                <p>Your Document Will Appear Here</p>
+
+                <p>
+                    Paste a PDF link above to start reading.
+                </p>
+
             </div>
+
         </section>
+
     </main>
+
+    <footer class="footer">
+
+        <p>
+            © 2026 Doque. Built for fast document viewing.
+        </p>
+
+    </footer>
+
+    <script src="js/app.js"></script>
+
 </body>
 
 </html>
