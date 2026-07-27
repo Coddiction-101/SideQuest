@@ -1,1 +1,65 @@
+:root {
 
+
+    --color-primary: #2563eb;
+    --color-primary-hover: #1d4ed8;
+    --color-background: #0f172a;
+    --color-surface: #1e293b;
+    --color-surface-light: #334155;
+    --color-text: #f8fafc;
+    --color-text-muted: #94a3b8;
+    --color-border: #475569;
+    --color-success: #22c55e;
+    --color-danger: #ef4444;
+
+
+    --font-family:
+        'Raleway',
+        'QuickSand';
+
+    --fs-xs: 0.75rem;
+    --fs-sm: 0.875rem;
+    --fs-md: 1rem;
+    --fs-lg: 1.125rem;
+    --fs-xl: 1.5rem;
+    --fs-2xl: 2.5rem;
+    --fs-3xl: 3.5rem;
+
+    --fw-regular: 400;
+    --fw-medium: 500;
+    --fw-semibold: 600;
+    --fw-bold: 700;
+
+    --line-height: 1.6;
+
+
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2rem;
+    --space-2xl: 3rem;
+    --space-3xl: 5rem;
+
+
+    --radius-sm: 0.5rem;
+    --radius-md: 0.75rem;
+    --radius-lg: 1rem;
+    --radius-xl: 1.5rem;
+    --radius-pill: 999px;
+
+
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, .15);
+
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, .25);
+
+    --shadow-lg: 0 16px 40px rgba(0, 0, 0, .35);
+
+    --container-width: 1200px;
+
+
+
+    --transition-fast: .2s ease;
+
+    --transition-normal: .3s ease;
+}
