@@ -10,5 +10,4 @@ Each project reflects a different stage of my journey—from small prototypes to
 * [Quantix](https://github.com/Coddiction-101/Quantix)
  
 ---
-
- *0 AI Ts*
+ 
