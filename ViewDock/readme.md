@@ -1,8 +1,8 @@
-# ViewDock
+# Doque
 
 > **Open. Read. Download. Instantly.**
 
-ViewDock is a lightweight web application that lets users preview documents directly from a URL without downloading them first.
+Doque is a lightweight web application that lets users preview documents directly from a URL without downloading them first.
 
 Simply paste a document link, and ViewDock fetches, renders, and displays the content in your browser with a smooth reading experience.
 
