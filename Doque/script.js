@@ -20,7 +20,7 @@ console.log(canvas);
 console.log(context);
 console.log(emptyState);
 
-async function renderPDF (url) {
+async function renderPDF(url) {
     const loadingTask = pdfjsLib.getDocument(url);
     const pdf = await loadingTask.promise;
 
@@ -38,4 +38,21 @@ async function renderPDF (url) {
     };
 
     await page.render(renderContext).promise;
+
+    emptyState.style.display = "none";
+    canvas.style.display = "block";
+
 }
+
+
+
+openButton.addEventListener("click", () => {
+    const url = pdfUrlInput.value.trim();
+
+    if (!url) {
+        alert("Please enter a PDF URL.");
+        return;
+    }
+
+    renderPDF(url);
+});
