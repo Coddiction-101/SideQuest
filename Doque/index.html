@@ -1,1 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Doque | Open Documents Instantly</title>
+</head>
+
+<body>
+
+    <header class="header">
+        <nav class="navbar">
+
+            <a href="/" class="logo">Doque</a>
+
+            <ul class="nav-links">
+                <li><a href="#">GitHub</a></li>
+                <li><a href="#">About</a></li>
+            </ul>
+
+        </nav>
+    </header>
+
+    <main>
+
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <h1>Open Documents Instantly</h1>
+
+                <p class="paste">
+                    Paste a public PDF link and preview it directly in your browser without downloading it first.
+                </p>
+
+                <div class="input-group">
+
+                    <label for="pdf-url" class="sr-only">
+                        PDF URL
+                    </label>
+
+                    <input id="pdf-url" type="url" placeholder="https://example.com/document.pdf">
+
+                    <button class="open-btn">
+                        Open Document
+                    </button>
+
+                </div>
+
+                <div class="features">
+                    <span>Public PDF Links</span>
+                    <span>Fast Preview</span>
+                    <span>Free to Use</span>
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="viewer">
+
+            <div class="viewer-toolbar">
+
+            </div>
+
+            <div class="viewer-content">
+
+                <div class="empty-state">
+
+                    <i class="fa-regular fa-file-pdf"></i>
+
+                    <h2>Document Viewer</h2>
+
+                    <p>
+                        Paste a PDF link above to start previewing your document.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+    <script type="module" src="script.js"></script>
+</body>
+
+</html>
