@@ -225,8 +225,10 @@ input {
 
 
 .viewer {
-    margin-top: 3rem;
+    width: min(92%, var(--container-width));
+    margin-inline: auto;
 }
+
 
 
 .viewer-toolbar {
