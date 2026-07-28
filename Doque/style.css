@@ -71,8 +71,11 @@ input {
 }
 
 .container {
-    width: min(92%, var(--container-width));
+    width: 100%;
+    max-width: var(--container-width);
+
     margin-inline: auto;
+    padding-inline: 1rem;
 }
 
 .sr-only {
@@ -121,17 +124,15 @@ input {
 }
 
 .hero {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     min-height: calc(100vh - 90px);
+    display: flex;
+    align-items: center;
     padding: 4rem 0;
 }
 
-.hero-content {
-    width: 100%;
-    max-width: 850px;
 
+
+.hero-content {
     display: flex;
     flex-direction: column;
     align-items: center;
