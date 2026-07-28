@@ -92,8 +92,7 @@ input {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: min(92%, var(--container-width));
-    margin-inline: auto;
+
     padding: 1.5rem 0;
 }
 
