@@ -314,9 +314,11 @@ input {
 }
 
 .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
 }
-
 .empty-state i {
     margin-bottom: 1rem;
     font-size: 4rem;
