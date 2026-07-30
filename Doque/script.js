@@ -89,7 +89,7 @@ prevButton.addEventListener("click", async () => {
 
     currentPage--;
     await renderPage(currentPage);
-})
+});
 
 
 //nextPage
@@ -102,5 +102,54 @@ nextButton.addEventListener("click", async () => {
     currentPage++;
     await renderPage(currentPage);
 
+});
 
-})
+
+zoomInButton.addEventListener("click", async () => {
+    if (!pdfDocument) return;
+    currentScale += 0.2;
+
+    await renderPage(currentPage);
+});
+
+
+zoomOutButton.addEventListener("click", async () => {
+    if (!pdfDocument) return;
+
+    if (currentScale <= 0.6) return;
+    currentScale -= 0.2;
+
+    await renderPage(currentPage);
+});
+
+downloadButton.addEventListener("click", () => {
+
+    if (!currentUrl) return;
+
+    const link = document.createElement("a");
+
+    link.href = currentUrl;
+
+    link.target = "_blank";
+
+    link.download = "";
+
+    link.click();
+
+});
+
+fullscreenButton.addEventListener("click", () => {
+
+    const viewer = document.querySelector(".viewer-content");
+
+    if (!document.fullscreenElement) {
+
+        viewer.requestFullscreen();
+
+    } else {
+
+        document.exitFullscreen();
+
+    }
+
+});
