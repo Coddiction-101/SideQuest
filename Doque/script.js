@@ -80,3 +80,12 @@ openButton.addEventListener("click", () => {
     loadPDF(url);
 
 });
+
+prevButton.addEventListener("click", async () => {
+    if (!pdfDocument) return;
+
+    if (currentPage <= 1) return;
+
+    currentPage--;
+    await renderPage(currentPage);
+})
