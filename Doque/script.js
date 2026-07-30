@@ -81,6 +81,7 @@ openButton.addEventListener("click", () => {
 
 });
 
+// prevvButton
 prevButton.addEventListener("click", async () => {
     if (!pdfDocument) return;
 
@@ -88,4 +89,18 @@ prevButton.addEventListener("click", async () => {
 
     currentPage--;
     await renderPage(currentPage);
+})
+
+
+//nextPage
+
+nextButton.addEventListener("click", async () => {
+    if (!pdfDocument) return;
+
+    if (currentPage >= pdfDocument.numPages) return;
+
+    currentPage++;
+    await renderPage(currentPage);
+
+
 })
