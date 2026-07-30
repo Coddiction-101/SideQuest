@@ -9,6 +9,8 @@ const openButton = document.getElementById("open-btn");
 const canvas = document.getElementById("pdf-canvas");
 const context = canvas.getContext("2d");
 
+context.imageSmoothingEnabled = true;
+
 const emptyState = document.querySelector(".empty-state");
 
 const prevButton = document.getElementById("prev-page");
@@ -28,6 +30,13 @@ let currentScale = 1.5;
 let currentUrl = "";
 
 async function renderPage(pageNumber) {
+
+    if (!pdfDocument) return;
+
+    if (pageNumber < 1 || pageNumber > pdfDocument.numPages) {
+        return;
+    }
+
     const page = await pdfDocument.getPage(pageNumber);
 
     const viewport = page.getViewport({
@@ -51,7 +60,9 @@ async function renderPage(pageNumber) {
 }
 
 async function loadPDF(url) {
+
     try {
+
         currentUrl = url;
 
         const loadingTask = pdfjsLib.getDocument(url);
@@ -59,16 +70,20 @@ async function loadPDF(url) {
         pdfDocument = await loadingTask.promise;
 
         currentPage = 1;
+        currentScale = 1.5;
 
         await renderPage(currentPage);
 
     } catch (error) {
+
         console.error(error);
         alert("Unable to load this PDF.");
+
     }
+
 }
 
-openButton.addEventListener("click", () => {
+openButton.addEventListener("click", async () => {
 
     const url = pdfUrlInput.value.trim();
 
@@ -77,49 +92,62 @@ openButton.addEventListener("click", () => {
         return;
     }
 
-    loadPDF(url);
+    await loadPDF(url);
 
 });
 
-// prevvButton
+pdfUrlInput.addEventListener("keydown", (event) => {
+
+    if (event.key === "Enter") {
+        openButton.click();
+    }
+
+});
+
 prevButton.addEventListener("click", async () => {
+
     if (!pdfDocument) return;
 
     if (currentPage <= 1) return;
 
     currentPage--;
+
     await renderPage(currentPage);
+
 });
 
-
-//nextPage
-
 nextButton.addEventListener("click", async () => {
+
     if (!pdfDocument) return;
 
     if (currentPage >= pdfDocument.numPages) return;
 
     currentPage++;
+
     await renderPage(currentPage);
 
 });
 
-
 zoomInButton.addEventListener("click", async () => {
+
     if (!pdfDocument) return;
+
     currentScale += 0.2;
 
     await renderPage(currentPage);
+
 });
 
-
 zoomOutButton.addEventListener("click", async () => {
+
     if (!pdfDocument) return;
 
     if (currentScale <= 0.6) return;
+
     currentScale -= 0.2;
 
     await renderPage(currentPage);
+
 });
 
 downloadButton.addEventListener("click", () => {
@@ -129,26 +157,36 @@ downloadButton.addEventListener("click", () => {
     const link = document.createElement("a");
 
     link.href = currentUrl;
-
     link.target = "_blank";
-
     link.download = "";
+
+    document.body.appendChild(link);
 
     link.click();
 
+    document.body.removeChild(link);
+
 });
 
-fullscreenButton.addEventListener("click", () => {
+fullscreenButton.addEventListener("click", async () => {
 
     const viewer = document.querySelector(".viewer-content");
 
-    if (!document.fullscreenElement) {
+    try {
 
-        viewer.requestFullscreen();
+        if (!document.fullscreenElement) {
 
-    } else {
+            await viewer.requestFullscreen();
 
-        document.exitFullscreen();
+        } else {
+
+            await document.exitFullscreen();
+
+        }
+
+    } catch (error) {
+
+        console.error(error);
 
     }
 
