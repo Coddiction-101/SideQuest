@@ -1,1 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Watcher — Performance Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>⚡ Watcher</h1>
+      <p>Performance Monitoring Dashboard</p>
+    </header>
 
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number" id="total-samples">0</div>
+        <div class="stat-label">Total Samples</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="avg-load">0ms</div>
+        <div class="stat-label">Avg Page Load</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="avg-lcp">0ms</div>
+        <div class="stat-label">Avg LCP</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="mobile-pct">0%</div>
+        <div class="stat-label">Mobile Traffic</div>
+      </div>
+    </div>
+
+    <div class="chart-container">
+      <h2>Page Load Time Trend</h2>
+      <canvas id="load-chart" width="1000" height="300"></canvas>
+    </div>
+
+    <div class="table-container">
+      <h2>Recent Metrics (Last 50 Visits)</h2>
+      <table id="metrics-table">
+        <thead>
+          <tr>
+            <th>Timestamp</th>
+            <th>Page Load (ms)</th>
+            <th>LCP (ms)</th>
+            <th>CLS</th>
+            <th>Device</th>
+            <th>Referrer</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div class="actions">
+      <button class="btn" onclick="window.WatcherAPI.exportJSON()">📥 Export JSON</button>
+      <button class="btn" onclick="window.WatcherAPI.exportCSV()">📋 Export CSV</button>
+      <button class="btn danger" onclick="if(confirm('Clear all data?')) { window.WatcherAPI.clearMetrics(); location.reload(); }">🗑️ Clear Data</button>
+    </div>
+  </div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>
