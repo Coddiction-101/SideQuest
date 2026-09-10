@@ -23,8 +23,8 @@ for (const size of [180, 192, 512]) {
       for (let sy = 0; sy < 4; sy++) for (let sx = 0; sx < 4; sx++) {
         const px = (x + (sx + 0.5) / 4) / size * 100
         const py = (y + (sy + 0.5) / 4) / size * 100
-        // The same geometric S as stoic-mark.svg, kept inside the maskable safe area.
-        if ((px >= 27 && px <= 73 && ((py >= 27 && py <= 37) || (py >= 45 && py <= 55) || (py >= 63 && py <= 73))) || (px >= 27 && px <= 37 && py >= 37 && py <= 45) || (px >= 63 && px <= 73 && py >= 55 && py <= 63)) ink++
+        // Three steps, matching stoic-steps.svg within the maskable safe area.
+        if ((px >= 29 && px <= 39 && py >= 57 && py <= 71) || (px >= 45 && px <= 55 && py >= 43 && py <= 71) || (px >= 61 && px <= 71 && py >= 29 && py <= 71)) ink++
       }
       const color = Math.round(32 + (240 - 32) * ink / 16)
       const index = y * (size * 3 + 1) + 1 + x * 3
@@ -37,5 +37,6 @@ for (const size of [180, 192, 512]) {
   const png = Buffer.concat([Buffer.from([137,80,78,71,13,10,26,10]), chunk('IHDR', header), chunk('IDAT', deflateSync(raw)), chunk('IEND', Buffer.alloc(0))])
   writeFileSync(`public/icon-${size}.png`, png)
   writeFileSync(`public/stoic-s-${size}.png`, png)
+  writeFileSync(`public/stoic-steps-${size}.png`, png)
 }
 console.log('Generated monochrome app icons.')
