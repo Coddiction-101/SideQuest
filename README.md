@@ -9,6 +9,7 @@ Each project reflects a different stage of my journey—from small prototypes to
 * GitVerse
 * Doque
 * [Quantix](https://github.com/Coddiction-101/Quantix)
+* Stoic
  
 ---
  
