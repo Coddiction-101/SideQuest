@@ -8,7 +8,7 @@ export default function Today({ today, now, tasks, updateTasks, deleteTask, habi
   const [dragId, setDragId] = useState(null)
   const [dropId, setDropId] = useState(null)
   const hour = new Date(now).getHours()
-  const greeting = hour < 5 || hour >= 22 ? 'Good night.' : hour < 12 ? 'Good morning.' : hour < 17 ? 'Good afternoon.' : 'Good evening.'
+  const greeting = hour >= 5 && hour < 12 ? 'Morning.' : hour >= 12 && hour < 17 ? 'Afternoon.' : 'Tonight.'
   const completedCount = tasks.filter(task => task.completed).length
   return (
     <section className="today-page" aria-labelledby="page-heading">
