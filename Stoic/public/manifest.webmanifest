@@ -1,0 +1,15 @@
+{
+  "id": "/",
+  "name": "Stoic",
+  "short_name": "Stoic",
+  "description": "Less tracking. More doing. Tasks, habits, and focused time.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f0f0f0",
+  "theme_color": "#f0f0f0",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
