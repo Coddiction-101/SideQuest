@@ -1,1 +1,1 @@
-
+Building Stoic — a minimal, distraction-free habit and daily-focus web app with four sections: Today, Habits, Clock, and Life Progress. The philosophy of "Less tracking. More doing." will be reflected in every design and UX decision — no dashboards, no gamification, no clutter. Built with Next.js and TypeScript, with all data persisted via localStorage.
