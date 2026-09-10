@@ -1,8 +1,11 @@
 # Stoic
 
+```
 A minimal, distraction-free daily focus app built around one idea:
+```
 
 > Less tracking. More doing.
+> Check it = https://stoic-gilt.vercel.app/
 
 Stoic combines a simple daily task list, habits, essential clock tools, and life progress without dashboards, gamification, accounts, or unnecessary noise.
 
