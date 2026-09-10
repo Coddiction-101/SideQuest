@@ -25,7 +25,8 @@ button { cursor: pointer; }
 p { margin: 0; color: var(--muted); line-height: 1.6; }
 ::selection { background: var(--selection); color: var(--ink); }
 .desktop-header { position: sticky; top: 0; z-index: 10; background: var(--surface); width: 100%; max-width: 880px; margin: auto; padding: clamp(8px, 2svh, 20px) clamp(16px, 4vw, 28px); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-.wordmark { font-size: 18px; font-weight: 600; letter-spacing: -0.6px; }
+.brand-symbol { width: 28px; height: 28px; flex-shrink: 0; }
+.wordmark { display: inline-flex; align-items: center; gap: 6px; font-size: 18px; font-weight: 600; letter-spacing: -0.6px; }
 .navigation { display: flex; gap: 4px; }
 .navigation button { display: flex; align-items: center; gap: 4px; min-height: 44px; padding: 6px 8px; border: 0; background: transparent; color: var(--muted); font-size: 12px; font-weight: 500; transition: color 180ms; }
 .nav-icon { display: grid; place-items: center; width: 36px; height: 28px; border-radius: 20px; transition: background-color 180ms, transform 180ms; }
@@ -168,7 +169,7 @@ h1 { margin: 0; font-size: 28px; line-height: 1.25; font-weight: 600; letter-spa
 
 @media (max-width: 640px) {
   .desktop-header { padding: 4px clamp(16px, 5vw, 24px); }
-  .wordmark { display: block; }
+  .wordmark { display: inline-flex; }
   main { margin-top: 0; padding: clamp(12px, 3svh, 28px) clamp(16px, 5vw, 24px) calc(76px + env(safe-area-inset-bottom)); }
   h1 { font-size: clamp(23px, 6vw, 26px); }
   .navigation { position: fixed; bottom: 0; left: 0; right: 0; z-index: 5; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; padding: 6px 8px calc(8px + env(safe-area-inset-bottom)); border-top: 1px solid var(--line); background: var(--surface); }

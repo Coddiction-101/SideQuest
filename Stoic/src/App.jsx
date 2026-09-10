@@ -87,7 +87,7 @@ export default function App() {
   const timerFinished = clock.remaining === 0
   return (
     <div className="app-shell">
-      <header className="desktop-header"><span className="wordmark">Stoic</span><Navigation activePage={activePage} onNavigate={navigate} />        <div className="app-controls" role="group" aria-label="App settings">
+      <header className="desktop-header"><span className="wordmark"><svg className="brand-symbol" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="10" strokeLinecap="round" aria-hidden="true"><path d="M68 28H44a11 11 0 0 0 0 22h12a11 11 0 0 1 0 22H32" /></svg>Stoic</span><Navigation activePage={activePage} onNavigate={navigate} />        <div className="app-controls" role="group" aria-label="App settings">
           <button className="theme-toggle" aria-label={`Switch to ${data.theme === 'light' ? 'dark' : 'light'} mode`} title={`Switch to ${data.theme === 'light' ? 'dark' : 'light'} mode`} onClick={() => setData(current => ({ ...current, theme: current.theme === 'light' ? 'dark' : 'light' }))}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 3a9 9 0 0 1 0 18Z" fill="currentColor" stroke="none" /></svg>
           </button>
