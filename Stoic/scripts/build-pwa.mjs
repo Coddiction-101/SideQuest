@@ -2,7 +2,8 @@ import { readFileSync, readdirSync, writeFileSync } from 'node:fs'
 import { createHash } from 'node:crypto'
 
 const assets = readdirSync('dist/assets').map(file => `/assets/${file}`)
-const files = ['/index.html', '/manifest.webmanifest', '/stoic.svg', '/icon-180.png', '/icon-192.png', '/icon-512.png', ...assets]
+const pulse = readdirSync('dist/pulse').map(file => `/pulse/${file}`)
+const files = ['/index.html', '/manifest.webmanifest', '/stoic.svg', '/icon-180.png', '/icon-192.png', '/icon-512.png', ...assets, ...pulse]
 const hash = createHash('sha256')
 for (const file of files) hash.update(readFileSync(`dist${file}`))
 const version = hash.digest('hex').slice(0, 12)
@@ -34,7 +35,8 @@ self.addEventListener('fetch', event => {
         if (!response.ok) throw new Error('Navigation unavailable');
         return response;
       } catch {
-        return await cache.match('/index.html') || Response.error();
+        const pathname = new URL(request.url).pathname;
+        return await cache.match(pathname.startsWith('/pulse/') ? '/pulse/index.html' : '/index.html') || Response.error();
       } finally { clearTimeout(timer); }
     })());
     return;

@@ -43,6 +43,7 @@ export default function AppMenu({ data, onRestore, install }) {
     <summary aria-label="App options" title="App options"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="1.5" /><circle cx="12" cy="12" r="1.5" /><circle cx="19" cy="12" r="1.5" /></svg></summary>
     <div className="app-menu-panel">
       <h2>On this device</h2>
+      <a className="menu-action" href="/pulse/index.html" target="_blank" rel="noopener">Pulse performance ↗</a>
       {!install.installed && <button className="menu-action" onClick={install.install}>Install Stoic <span aria-hidden="true">↗</span></button>}
       {install.update && <button className="menu-action" onClick={install.applyUpdate}>Update app</button>}
       <button className="menu-action" onClick={() => { downloadBackup(data); setError(false); setMessage('Backup exported.') }}>Export backup <span aria-hidden="true">↓</span></button>
