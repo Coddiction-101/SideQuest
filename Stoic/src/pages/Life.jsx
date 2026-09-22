@@ -1,4 +1,3 @@
-import ProgressBar from '../components/ProgressBar.jsx'
 import TimeDots from '../components/TimeDots.jsx'
 import { useState } from 'react'
 import { lifeProgress, timeProgress } from '../utils/progress.js'
