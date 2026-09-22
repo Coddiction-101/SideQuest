@@ -1,3 +1,5 @@
+import ProgressBar from '../components/ProgressBar.jsx'
+import TimeDots from '../components/TimeDots.jsx'
 import { useState } from 'react'
 import { lifeProgress, timeProgress } from '../utils/progress.js'
 import { localDateKey } from '../utils/dates.js'
@@ -11,7 +13,22 @@ export default function Life({ now, profile, onSave }) {
   return (
     <section className="life-page" aria-labelledby="page-heading">
       <h1 id="page-heading">Life</h1>
-      <div className="progress-list">{timeProgress(now).map(progress => <ProgressBar key={progress.label} {...progress} />)}</div>
+      <div className="progress-list">
+        {timeProgress(now).map(progress =>
+          progress.label === 'Today' ? (
+            <TimeDots
+              key={progress.label}
+              {...progress}
+              total={24}
+            />
+          ) : (
+            <ProgressBar
+              key={progress.label}
+              {...progress}
+            />
+          )
+        )}
+      </div>
       <section className="life-section" aria-labelledby="life-progress-heading">
         <div className="life-heading"><h2 id="life-progress-heading">Life</h2>{profile && !editing && <button className="text-button" onClick={() => setEditing(true)}>Edit</button>}</div>
         {life && !editing ? <div className="life-estimate">
