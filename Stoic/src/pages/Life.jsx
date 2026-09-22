@@ -14,16 +14,17 @@ export default function Life({ now, profile, onSave }) {
       <h1 id="page-heading">Life</h1>
       <div className="progress-list">
         {timeProgress(now).map(progress =>
-          progress.label === 'Today' ? (
+          progress.label === 'Year' ||
+            progress.label === 'Month' ||
+            progress.label === 'Today' ? (
             <TimeDots
               key={progress.label}
               {...progress}
-              total={24}
-            />
-          ) : progress.label === 'Month' ? (
-            <TimeDots
-              key={progress.label}
-              {...progress}
+              total={
+                progress.label === 'Today'
+                  ? 24
+                  : progress.total
+              }
             />
           ) : (
             <ProgressBar
