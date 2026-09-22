@@ -20,6 +20,11 @@ export default function Life({ now, profile, onSave }) {
               {...progress}
               total={24}
             />
+          ) : progress.label === 'Month' ? (
+            <TimeDots
+              key={progress.label}
+              {...progress}
+            />
           ) : (
             <ProgressBar
               key={progress.label}
