@@ -1266,6 +1266,17 @@ h1 {
   margin: 0;
 }
 
+.time-dots--year {
+  grid-template-columns: repeat(26, 1fr);
+  gap: 4px;
+  max-width: 520px;
+}
+
+.time-dots--year .time-dot {
+  width: 5px;
+  height: 5px;
+}
+
 
 @media (forced-colors: active) {
   .task-label input {
