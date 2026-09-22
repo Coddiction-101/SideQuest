@@ -19,7 +19,14 @@ export function timeProgress(now) {
   const elapsedMinutes = Math.floor((now - dayStart) / 60000)
   return [
     { label: 'Today', percent: percent(now, dayStart, dayEnd), detail: `${Math.floor(elapsedMinutes / 60)}h ${elapsedMinutes % 60}m of ${(dayEnd - dayStart) / 3600000}h` },
-    { label: 'Month', percent: percent(now, monthStart, monthEnd), detail: `${date.getDate() - 1} of ${daysInMonth} days elapsed` },
+    {
+      label: 'Month',
+      percent: percent(now, monthStart, monthEnd),
+      detail: `${date.getDate() - 1} of ${daysInMonth} days elapsed`,
+      elapsed: date.getDate() - 1,
+      total: daysInMonth
+    },
+    
     { label: 'Year', percent: percent(now, yearStart, yearEnd), detail: `${elapsedDays} of ${daysInYear} days elapsed` },
   ]
 }
