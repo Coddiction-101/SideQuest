@@ -26,8 +26,14 @@ export function timeProgress(now) {
       elapsed: date.getDate() - 1,
       total: daysInMonth
     },
-    
-    { label: 'Year', percent: percent(now, yearStart, yearEnd), detail: `${elapsedDays} of ${daysInYear} days elapsed` },
+
+    {
+      label: 'Year',
+      percent: percent(now, yearStart, yearEnd),
+      detail: `${elapsedDays} of ${daysInYear} days elapsed`,
+      elapsed: elapsedDays,
+      total: daysInYear
+    }
   ]
 }
 
