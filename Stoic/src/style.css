@@ -6,6 +6,7 @@
   --hover: #e6e6e6;
   --selected: #dadada;
   --selection: #cccccc;
+  --accent: #5b6ef5;
   font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   color: var(--ink);
   background: var(--surface);
@@ -358,6 +359,7 @@ h1 {
   --hover: #2a2a2a;
   --selected: #363636;
   --selection: #505050;
+  --accent: #5b6ef5;
 }
 
 .today-preview {
@@ -1161,7 +1163,7 @@ h1 {
 
 .progress-item {
   width: 100%;
-  border-bottom: 1px solid var(--border, rgba(255, 255, 255, 0.08));
+  border-bottom: 1px solid var(--line);
 }
 
 .progress-toggle {
@@ -1344,7 +1346,7 @@ h1 {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--border, #e5e5e1);
+  background: var(--line);
   transition:
     background-color 200ms ease,
     opacity 200ms ease,
@@ -1352,7 +1354,7 @@ h1 {
 }
 
 .time-dot--elapsed {
-  background: currentColor;
+  background: var(--accent);
 }
 
 .time-dots-row p {
@@ -1434,5 +1436,175 @@ h1 {
 
   .navigation button:active .nav-icon {
     transform: none;
+  }
+}
+
+/* Life time-scale viewer */
+
+.life-page {
+  display: block;
+}
+
+.life-page>h1 {
+  margin-bottom: 28px;
+}
+
+.life-viewer {
+  width: min(100%, 760px);
+  margin: 0 auto;
+}
+
+.life-scale-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+  margin-bottom: 30px;
+}
+
+.life-scale-tab {
+  position: relative;
+  padding: 8px 0 12px;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 14px;
+  cursor: pointer;
+  transition:
+    color 180ms ease,
+    opacity 180ms ease;
+}
+
+.life-scale-tab:hover {
+  color: var(--ink);
+}
+
+.life-scale-tab--active {
+  color: var(--ink);
+}
+
+.life-scale-tab--active::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 22px;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--accent);
+  transform: translateX(-50%);
+}
+
+.life-stage {
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: lifeStageIn 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.life-stage-header {
+  width: min(100%, 520px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  color: var(--ink);
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+.life-stage-header span:first-child {
+  font-weight: 600;
+}
+
+.life-stage-header span:last-child {
+  color: var(--muted);
+}
+
+.life-stage-visual {
+  width: min(100%, 520px);
+  display: flex;
+  justify-content: center;
+}
+
+.life-stage-visual .progress-heading {
+  display: none;
+}
+
+.life-stage-visual .time-dots-row {
+  width: 100%;
+  align-items: center;
+  gap: 18px;
+}
+
+.life-stage-visual .time-dots {
+  justify-content: center;
+}
+
+.life-stage-visual .time-dots-row>p {
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.life-stage-meta {
+  margin-top: 18px;
+  text-align: center;
+}
+
+.life-stage-meta .text-button {
+  margin-top: 6px;
+}
+
+.life-slider-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 18px;
+  color: var(--muted);
+}
+
+.life-slider-controls button {
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--muted);
+  font-size: 20px;
+  cursor: pointer;
+  transition:
+    color 180ms ease,
+    background-color 180ms ease,
+    transform 180ms ease;
+}
+
+.life-slider-controls button:hover {
+  color: var(--ink);
+  background: var(--hover);
+}
+
+.life-slider-controls button:active {
+  transform: scale(0.94);
+}
+
+.life-slider-controls span {
+  min-width: 42px;
+  text-align: center;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes lifeStageIn {
+  from {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
