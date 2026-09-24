@@ -1208,13 +1208,29 @@ h1 {
 
 
 .progress-content {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
   overflow: hidden;
-  padding: 2px 0 22px;
-
-  animation: progressReveal 280ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition:
+    grid-template-rows 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 220ms ease;
 }
 
+.progress-content-inner {
+  min-height: 0;
+  overflow: hidden;
+}
 
+.progress-content--open {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.progress-content--closed {
+  grid-template-rows: 0fr;
+  opacity: 0;
+}
 
 .progress-content .progress-heading {
   display: none;
@@ -1223,24 +1239,13 @@ h1 {
 .progress-content .time-dots-row {
   gap: 14px;
   margin: 0;
+  padding: 2px 0 22px;
 }
 
 .progress-content .time-dots-row>p {
   margin: 0;
   font-size: 0.88rem;
   opacity: 0.58;
-}
-
-@keyframes progressReveal {
-  from {
-    opacity: 0;
-    transform: translateY(-6px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 @media (max-height: 600px) and (max-width: 640px) {
