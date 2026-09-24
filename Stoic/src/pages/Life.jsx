@@ -36,13 +36,27 @@ export default function Life({ now, profile, onSave }) {
       </div>
       <section className="life-section" aria-labelledby="life-progress-heading">
         <div className="life-heading"><h2 id="life-progress-heading">Life</h2>{profile && !editing && <button className="text-button" onClick={() => setEditing(true)}>Edit</button>}</div>
-        {life && !editing ? <div className="life-estimate">
-          <div className="life-ring" role="progressbar" aria-label="Estimated life elapsed" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.floor(life.percent)}>
-            <svg viewBox="0 0 100 100" aria-hidden="true"><circle className="ring-track" cx="50" cy="50" r="45" /><circle className="ring-value" cx="50" cy="50" r="45" pathLength="100" strokeDasharray={`${life.percent} 100`} /></svg>
-            <span>{Math.floor(life.percent)}%</span>
+        {life && !editing ? (
+          <div className="life-estimate">
+            <TimeDots
+              label="Life"
+              percent={life.percent}
+              elapsed={life.elapsedWeeks}
+              total={life.totalWeeks}
+              detail={`${life.elapsedWeeks.toLocaleString()} of ${life.totalWeeks.toLocaleString()} weeks elapsed`}
+            />
+
+            <div>
+              <p className="life-age">
+                Age {life.age} · {profile.lifespan} year estimate
+              </p>
+
+              <p className="estimate-note">
+                An estimate, not a prediction.
+              </p>
+            </div>
           </div>
-          <div><p className="life-age">Age {life.age} · {profile.lifespan} year estimate</p><p className="estimate-note">An estimate, not a prediction.</p></div>
-        </div> : <form className="life-form" onSubmit={event => {
+        ) : <form className="life-form" onSubmit={event => {
           event.preventDefault()
           if (!birthDate || birthDate > localDateKey(new Date(now))) return
           onSave({ birthDate, lifespan: Number(lifespan) })
