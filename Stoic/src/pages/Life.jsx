@@ -8,31 +8,57 @@ export default function Life({ now, profile, onSave }) {
   const [editing, setEditing] = useState(false)
   const [birthDate, setBirthDate] = useState(profile?.birthDate ?? '')
   const [lifespan, setLifespan] = useState(String(profile?.lifespan ?? 80))
+  const [openProgress, setOpenProgress] = useState(null)
   const life = profile ? lifeProgress(profile.birthDate, profile.lifespan, now) : null
   return (
     <section className="life-page" aria-labelledby="page-heading">
       <h1 id="page-heading">Life</h1>
       <div className="progress-list">
-        {timeProgress(now).map(progress =>
-          progress.label === 'Year' ||
-            progress.label === 'Month' ||
-            progress.label === 'Today' ? (
-            <TimeDots
+        {timeProgress(now).map(progress => {
+          const isOpen = openProgress === progress.label
+
+          return (
+            <div
+              className={`progress-item ${isOpen ? 'progress-item--open' : ''}`}
               key={progress.label}
-              {...progress}
-              total={
-                progress.label === 'Today'
-                  ? 24
-                  : progress.total
-              }
-            />
-          ) : (
-            <ProgressBar
-              key={progress.label}
-              {...progress}
-            />
+            >
+              <button
+                className="progress-toggle"
+                type="button"
+                onClick={() =>
+                  setOpenProgress(current =>
+                    current === progress.label ? null : progress.label
+                  )
+                }
+                aria-expanded={isOpen}
+              >
+                <span>{progress.label}</span>
+                <span>{Math.floor(progress.percent)}%</span>
+              </button>
+
+              {isOpen && (
+                <div
+                  className={`progress-content ${isOpen
+                      ? 'progress-content--open'
+                      : 'progress-content--closed'
+                    }`}
+                  aria-hidden={!isOpen}
+                >
+                  <div className="progress-content-inner">
+                    <TimeDots
+                      {...progress}
+                      total={
+                        progress.label === 'Today'
+                          ? 24
+                          : progress.total
+                      }
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
           )
-        )}
+        })}
       </div>
       <section className="life-section" aria-labelledby="life-progress-heading">
         <div className="life-heading"><h2 id="life-progress-heading">Life</h2>{profile && !editing && <button className="text-button" onClick={() => setEditing(true)}>Edit</button>}</div>
