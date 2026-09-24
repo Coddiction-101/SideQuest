@@ -1,5 +1,4 @@
 :root {
-  /* Shared visual foundation for all four screens. */
   --surface: #f0f0f0;
   --ink: #202020;
   --muted: #626262;
@@ -351,7 +350,6 @@ h1 {
   white-space: nowrap;
 }
 
-/* The remaining screens share the same quiet list and control styles. */
 [data-theme='dark'] {
   --surface: #202020;
   --ink: #e8e8e8;
@@ -1023,7 +1021,6 @@ h1 {
   }
 }
 
-/* Keep the same content order as the window changes size. */
 @media (min-width: 641px) {
   .desktop-header {
     border-bottom: 1px solid var(--line);
@@ -1155,6 +1152,97 @@ h1 {
   }
 }
 
+
+.progress-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.progress-item {
+  width: 100%;
+  border-bottom: 1px solid var(--border, rgba(255, 255, 255, 0.08));
+}
+
+.progress-toggle {
+  width: 100%;
+  padding: 18px 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  font: inherit;
+  font-size: 1rem;
+  text-align: left;
+  cursor: pointer;
+
+  opacity: 0.72;
+
+  transition:
+    opacity 200ms ease,
+    padding 250ms ease;
+}
+
+.progress-toggle:hover {
+  opacity: 1;
+}
+
+.progress-item--open .progress-toggle {
+  opacity: 1;
+  padding-bottom: 12px;
+}
+
+.progress-item--open .progress-toggle span:first-child {
+  font-weight: 600;
+}
+
+.progress-toggle span:last-child {
+  font-size: 0.9rem;
+  opacity: 0.6;
+}
+
+
+
+.progress-content {
+  overflow: hidden;
+  padding: 2px 0 22px;
+
+  animation: progressReveal 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+
+
+.progress-content .progress-heading {
+  display: none;
+}
+
+.progress-content .time-dots-row {
+  gap: 14px;
+  margin: 0;
+}
+
+.progress-content .time-dots-row>p {
+  margin: 0;
+  font-size: 0.88rem;
+  opacity: 0.58;
+}
+
+@keyframes progressReveal {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (max-height: 600px) and (max-width: 640px) {
   main {
     margin-top: 0;
@@ -1277,6 +1365,17 @@ h1 {
   height: 5px;
 }
 
+.time-dots--life {
+  grid-template-columns: repeat(52, 3px);
+  gap: 3px;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.time-dots--life .time-dot {
+  width: 3px;
+  height: 3px;
+}
 
 @media (forced-colors: active) {
   .task-label input {
