@@ -11,6 +11,7 @@ export default function TimeDots({
       : Math.floor((percent / 100) * total)
 
   const isYear = label === 'Year'
+  const isLife = label === 'Life'
 
   return (
     <div className="time-dots-row">
@@ -20,7 +21,12 @@ export default function TimeDots({
       </div>
 
       <div
-        className={`time-dots ${isYear ? 'time-dots--year' : ''}`}
+        className={`time-dots ${isYear
+            ? 'time-dots--year'
+            : isLife
+              ? 'time-dots--life'
+              : ''
+          }`}
         role="progressbar"
         aria-label={`${label} elapsed`}
         aria-valuemin={0}
@@ -30,9 +36,8 @@ export default function TimeDots({
         {Array.from({ length: total }, (_, index) => (
           <span
             key={index}
-            className={`time-dot ${
-              index < completed ? 'time-dot--elapsed' : ''
-            }`}
+            className={`time-dot ${index < completed ? 'time-dot--elapsed' : ''
+              }`}
           />
         ))}
       </div>
