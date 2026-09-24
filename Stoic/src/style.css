@@ -8,7 +8,7 @@
   --hover: #e6e6e6;
   --selected: #dadada;
   --selection: #cccccc;
-  --accent: #5b6ef5;
+  --accent: #c47b57;
   font-family: 'Raleway', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   color: var(--ink);
   background: var(--surface);
@@ -361,7 +361,7 @@ h1 {
   --hover: #2a2a2a;
   --selected: #363636;
   --selection: #505050;
-  --accent: #5b6ef5;
+  --accent: #c47b57;
 }
 
 .today-preview {
@@ -1721,4 +1721,354 @@ h1 {
 .life-age,
 .estimate-note {
   font-family: var(--font-ui);
+}
+
+/* === Life viewer responsive v2 === */
+
+.life-page {
+  display: block;
+}
+
+.life-page > h1 {
+  margin-bottom: 0;
+}
+
+.life-viewer {
+  width: min(100%, 760px);
+  margin: clamp(24px, 5vh, 48px) auto 0;
+  padding-inline: clamp(0px, 2vw, 12px);
+}
+
+.life-scale-tabs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(18px, 4vw, 38px);
+  margin: 0 0 clamp(20px, 3vh, 30px);
+}
+
+.life-scale-tab {
+  position: relative;
+  padding: 8px 0 13px;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-family: var(--font-ui);
+  font-size: clamp(13px, 1.4vw, 16px);
+  font-weight: 500;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    color 180ms ease,
+    opacity 180ms ease;
+}
+
+.life-scale-tab:hover {
+  color: var(--ink);
+}
+
+.life-scale-tab--active {
+  color: var(--ink);
+}
+
+.life-scale-tab--active::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 28px;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--accent);
+  transform: translateX(-50%);
+}
+
+.life-stage {
+  min-height: 0;
+  width: 100%;
+  padding: clamp(20px, 3vh, 34px) 0 clamp(10px, 2vh, 20px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.life-stage-header {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: clamp(20px, 3vh, 30px);
+  font-variant-numeric: tabular-nums;
+}
+
+.life-stage-header span:first-child {
+  display: none;
+}
+
+.life-stage-header span:last-child {
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: clamp(42px, 7vw, 64px);
+  font-weight: 500;
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+}
+
+.life-stage-visual {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  overflow: visible;
+}
+
+.life-stage-visual .progress-heading {
+  display: none;
+}
+
+.life-stage-visual .time-dots-row {
+  width: 100%;
+  align-items: center;
+  gap: clamp(16px, 2.5vh, 24px);
+}
+
+.life-stage-visual .time-dots {
+  justify-content: center;
+}
+
+.life-stage-visual .time-dots-row > p {
+  margin: 0;
+  color: var(--muted);
+  font-size: clamp(12px, 1.2vw, 14px);
+  text-align: center;
+}
+
+/* One visual identity: elapsed = copper, future = neutral */
+.time-dot {
+  background: var(--line);
+}
+
+.time-dot--elapsed {
+  background: var(--accent);
+}
+
+/* Make the progress graphic feel substantial on larger screens */
+.life-stage-visual .time-dots:not(.time-dots--year):not(.time-dots--life) {
+  grid-template-columns: repeat(12, 10px);
+  gap: 10px 12px;
+  max-width: none;
+  width: fit-content;
+}
+
+.life-stage-visual .time-dots:not(.time-dots--year):not(.time-dots--life) .time-dot {
+  width: 10px;
+  height: 10px;
+}
+
+.life-stage-visual .time-dots--year {
+  grid-template-columns: repeat(26, 6px);
+  gap: 5px;
+  max-width: none;
+  width: fit-content;
+}
+
+.life-stage-visual .time-dots--year .time-dot {
+  width: 6px;
+  height: 6px;
+}
+
+.life-stage-visual .time-dots--life {
+  grid-template-columns: repeat(52, 4px);
+  gap: 3px;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.life-stage-visual .time-dots--life .time-dot {
+  width: 4px;
+  height: 4px;
+}
+
+.life-stage-meta {
+  margin-top: 18px;
+  text-align: center;
+}
+
+.life-stage-meta .text-button {
+  margin-top: 4px;
+}
+
+.life-slider-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin-top: clamp(20px, 3vh, 30px);
+  color: var(--muted);
+}
+
+.life-slider-controls button {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--muted);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    color 180ms ease,
+    background-color 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease;
+}
+
+.life-slider-controls button:hover {
+  color: var(--ink);
+  background: var(--hover);
+  border-color: var(--line);
+}
+
+.life-slider-controls button:active {
+  transform: scale(0.95);
+}
+
+.life-slider-controls span {
+  min-width: 44px;
+  text-align: center;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Life setup now lives inside the Life slide instead of below the viewer */
+.life-setup {
+  width: min(100%, 520px);
+  margin: 0 auto;
+  padding: 2px 0 0;
+}
+
+.life-setup-intro {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.life-setup-intro h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 38px);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+}
+
+.life-setup-intro p {
+  margin-top: 8px;
+  font-size: 13px;
+}
+
+.life-setup .life-form {
+  margin-top: 0;
+}
+
+.life-setup .life-form-actions {
+  justify-content: center;
+}
+
+.life-setup .estimate-note {
+  text-align: center;
+}
+
+@media (min-width: 641px) {
+  .life-page {
+    display: block;
+  }
+
+  .life-page > h1 {
+    grid-column: auto;
+  }
+
+  .life-page .life-section {
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .life-viewer {
+    width: 100%;
+    margin-top: 20px;
+    padding-inline: 0;
+  }
+
+  .life-scale-tabs {
+    gap: clamp(14px, 5vw, 22px);
+    margin-bottom: 14px;
+  }
+
+  .life-scale-tab {
+    font-size: 13px;
+  }
+
+  .life-stage {
+    padding-top: 18px;
+  }
+
+  .life-stage-header {
+    margin-bottom: 20px;
+  }
+
+  .life-stage-header span:last-child {
+    font-size: clamp(40px, 14vw, 54px);
+  }
+
+  .life-stage-visual {
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: none;
+    padding-inline: 4px;
+  }
+
+  .life-stage-visual::-webkit-scrollbar {
+    display: none;
+  }
+
+  .life-stage-visual .time-dots:not(.time-dots--year):not(.time-dots--life) {
+    grid-template-columns: repeat(12, 8px);
+    gap: 8px 10px;
+  }
+
+  .life-stage-visual .time-dots:not(.time-dots--year):not(.time-dots--life) .time-dot {
+    width: 8px;
+    height: 8px;
+  }
+
+  .life-stage-visual .time-dots--year {
+    grid-template-columns: repeat(26, 4px);
+    gap: 3px;
+  }
+
+  .life-stage-visual .time-dots--year .time-dot {
+    width: 4px;
+    height: 4px;
+  }
+
+  .life-stage-visual .time-dots--life {
+    grid-template-columns: repeat(52, 2px);
+    gap: 2px;
+  }
+
+  .life-stage-visual .time-dots--life .time-dot {
+    width: 2px;
+    height: 2px;
+  }
+
+  .life-slider-controls {
+    margin-top: 20px;
+  }
+
+  .life-setup {
+    width: 100%;
+  }
 }
