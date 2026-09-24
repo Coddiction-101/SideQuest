@@ -9,7 +9,8 @@ export default function Life({ now, profile, onSave }) {
   const [lifespan, setLifespan] = useState(
     String(profile?.lifespan ?? 80)
   )
-  const [openProgress, setOpenProgress] = useState(null)
+
+  const [activeIndex, setActiveIndex] = useState(0)
 
   const life = profile
     ? lifeProgress(profile.birthDate, profile.lifespan, now)
@@ -18,7 +19,7 @@ export default function Life({ now, profile, onSave }) {
   const progressItems = [
     ...timeProgress(now),
 
-    ...(life && !editing
+    ...(life
       ? [
           {
             label: 'Life',
@@ -32,6 +33,24 @@ export default function Life({ now, profile, onSave }) {
       : []),
   ]
 
+  const activeProgress = progressItems[activeIndex]
+
+  const goPrevious = () => {
+    setActiveIndex(current =>
+      current === 0
+        ? progressItems.length - 1
+        : current - 1
+    )
+  }
+
+  const goNext = () => {
+    setActiveIndex(current =>
+      current === progressItems.length - 1
+        ? 0
+        : current + 1
+    )
+  }
+
   return (
     <section
       className="life-page"
@@ -39,85 +58,101 @@ export default function Life({ now, profile, onSave }) {
     >
       <h1 id="page-heading">Life</h1>
 
-      <div className="progress-list">
-        {progressItems.map(progress => {
-          const isOpen = openProgress === progress.label
-
-          return (
-            <div
-              className={`progress-item ${
-                isOpen ? 'progress-item--open' : ''
-              }`}
+      <div className="life-viewer">
+        <div
+          className="life-scale-tabs"
+          role="tablist"
+          aria-label="Time progress"
+        >
+          {progressItems.map((progress, index) => (
+            <button
               key={progress.label}
+              type="button"
+              className={`life-scale-tab ${
+                activeIndex === index
+                  ? 'life-scale-tab--active'
+                  : ''
+              }`}
+              role="tab"
+              aria-selected={activeIndex === index}
+              onClick={() => setActiveIndex(index)}
             >
-              <button
-                className="progress-toggle"
-                type="button"
-                onClick={() =>
-                  setOpenProgress(current =>
-                    current === progress.label
-                      ? null
-                      : progress.label
-                  )
-                }
-                aria-expanded={isOpen}
-              >
-                <span>{progress.label}</span>
+              {progress.label}
+            </button>
+          ))}
+        </div>
 
-                <span>
-                  {Math.floor(progress.percent)}%
-                </span>
-              </button>
+        {activeProgress && (
+          <div
+            className="life-stage"
+            key={activeProgress.label}
+          >
+            <div className="life-stage-header">
+              <span>{activeProgress.label}</span>
 
-              <div
-                className={`progress-content ${
-                  isOpen
-                    ? 'progress-content--open'
-                    : 'progress-content--closed'
-                }`}
-                aria-hidden={!isOpen}
-              >
-                <div className="progress-content-inner">
-                  <TimeDots
-                    {...progress}
-                    total={
-                      progress.label === 'Today'
-                        ? 24
-                        : progress.total
-                    }
-                  />
-
-                  {progress.lifeData && (
-                    <div className="life-progress-meta">
-                      <p className="life-age">
-                        Age {life.age} · {profile.lifespan} year estimate
-                      </p>
-
-                      <p className="estimate-note">
-                        An estimate, not a prediction.
-                      </p>
-
-                      <button
-                        className="text-button"
-                        type="button"
-                        onClick={() => {
-                          setBirthDate(profile.birthDate)
-                          setLifespan(
-                            String(profile.lifespan)
-                          )
-                          setEditing(true)
-                          setOpenProgress(null)
-                        }}
-                      >
-                        Edit estimate
-                      </button>
-                    </div>
-                  )}
-                </div>
-              </div>
+              <span>
+                {Math.floor(activeProgress.percent)}%
+              </span>
             </div>
-          )
-        })}
+
+            <div className="life-stage-visual">
+              <TimeDots
+                {...activeProgress}
+                total={
+                  activeProgress.label === 'Today'
+                    ? 24
+                    : activeProgress.total
+                }
+              />
+            </div>
+
+            {activeProgress.lifeData && (
+              <div className="life-stage-meta">
+                <p className="life-age">
+                  Age {life.age} · {profile.lifespan} year estimate
+                </p>
+
+                <p className="estimate-note">
+                  An estimate, not a prediction.
+                </p>
+
+                <button
+                  className="text-button"
+                  type="button"
+                  onClick={() => {
+                    setBirthDate(profile.birthDate)
+                    setLifespan(String(profile.lifespan))
+                    setEditing(true)
+                  }}
+                >
+                  Edit estimate
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+
+        <div className="life-slider-controls">
+          <button
+            type="button"
+            onClick={goPrevious}
+            aria-label="Previous time scale"
+          >
+            ←
+          </button>
+
+          <span>
+            {activeIndex + 1} / {progressItems.length}
+          </span>
+
+          <button
+            type="button"
+            onClick={goNext}
+            aria-label="Next time scale"
+          >
+            →
+          </button>
+        </div>
       </div>
 
       {(!profile || editing) && (
@@ -149,7 +184,6 @@ export default function Life({ now, profile, onSave }) {
               })
 
               setEditing(false)
-              setOpenProgress('Life')
             }}
           >
             <p className="section-note">
@@ -201,9 +235,7 @@ export default function Life({ now, profile, onSave }) {
                   type="button"
                   onClick={() => {
                     setBirthDate(profile.birthDate)
-                    setLifespan(
-                      String(profile.lifespan)
-                    )
+                    setLifespan(String(profile.lifespan))
                     setEditing(false)
                   }}
                 >
