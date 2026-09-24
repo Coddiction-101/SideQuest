@@ -47,5 +47,20 @@ export function lifeProgress(birthDate, lifespan, now) {
   let age = current.getFullYear() - birth.getFullYear()
   const birthdayDay = Math.min(birth.getDate(), new Date(current.getFullYear(), birth.getMonth() + 1, 0).getDate())
   if (current < new Date(current.getFullYear(), birth.getMonth(), birthdayDay)) age -= 1
-  return { age: Math.max(0, age), percent: percent(now, birth, end) }
+  const totalWeeks = Math.floor((end - birth) / 604800000)
+
+  const elapsedWeeks = Math.max(
+    0,
+    Math.min(
+      totalWeeks,
+      Math.floor((current - birth) / 604800000)
+    )
+  )
+
+  return {
+    age: Math.max(0, age),
+    percent: percent(now, birth, end),
+    elapsedWeeks,
+    totalWeeks
+  }
 }
