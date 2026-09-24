@@ -1439,26 +1439,27 @@ h1 {
   }
 }
 
-/* Life time-scale viewer */
+/* === Life viewer final layout === */
 
 .life-page {
   display: block;
 }
 
-.life-page>h1 {
-  margin-bottom: 28px;
+.life-page > h1 {
+  margin-bottom: 0;
 }
 
 .life-viewer {
-  width: min(100%, 760px);
-  margin: 0 auto;
+  width: min(100%, 620px);
+  margin: clamp(28px, 6vh, 56px) auto 0;
 }
 
 .life-scale-tabs {
   display: flex;
+  align-items: center;
   justify-content: center;
-  gap: 28px;
-  margin-bottom: 30px;
+  gap: clamp(18px, 4vw, 32px);
+  margin: 0 0 22px;
 }
 
 .life-scale-tab {
@@ -1468,6 +1469,7 @@ h1 {
   background: transparent;
   color: var(--muted);
   font-size: 14px;
+  line-height: 1;
   cursor: pointer;
   transition:
     color 180ms ease,
@@ -1487,7 +1489,7 @@ h1 {
   position: absolute;
   left: 50%;
   bottom: 0;
-  width: 22px;
+  width: 24px;
   height: 2px;
   border-radius: 999px;
   background: var(--accent);
@@ -1495,35 +1497,37 @@ h1 {
 }
 
 .life-stage {
-  min-height: 320px;
+  min-height: 0;
+  padding: 24px 0 8px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  animation: lifeStageIn 280ms cubic-bezier(0.22, 1, 0.36, 1);
+  justify-content: flex-start;
+  animation: lifeStageIn 260ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .life-stage-header {
-  width: min(100%, 520px);
+  width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  margin-bottom: 20px;
-  color: var(--ink);
-  font-size: 14px;
+  margin-bottom: 22px;
   font-variant-numeric: tabular-nums;
 }
 
 .life-stage-header span:first-child {
-  font-weight: 600;
+  display: none;
 }
 
 .life-stage-header span:last-child {
-  color: var(--muted);
+  color: var(--ink);
+  font-size: clamp(24px, 4vw, 32px);
+  font-weight: 500;
+  letter-spacing: -0.04em;
 }
 
 .life-stage-visual {
-  width: min(100%, 520px);
+  width: 100%;
   display: flex;
   justify-content: center;
 }
@@ -1542,38 +1546,43 @@ h1 {
   justify-content: center;
 }
 
-.life-stage-visual .time-dots-row>p {
-  font-size: 12px;
+.life-stage-visual .time-dots-row > p {
+  margin: 0;
   color: var(--muted);
+  font-size: 12px;
   text-align: center;
 }
 
 .life-stage-meta {
-  margin-top: 18px;
+  margin-top: 16px;
   text-align: center;
 }
 
 .life-stage-meta .text-button {
-  margin-top: 6px;
+  margin-top: 4px;
 }
 
 .life-slider-controls {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 18px;
-  margin-top: 18px;
+  gap: 16px;
+  margin-top: 24px;
   color: var(--muted);
 }
 
 .life-slider-controls button {
-  width: 40px;
-  height: 40px;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
   border: 0;
   border-radius: 50%;
   background: transparent;
   color: var(--muted);
-  font-size: 20px;
+  font-size: 18px;
+  line-height: 1;
   cursor: pointer;
   transition:
     color 180ms ease,
@@ -1591,10 +1600,19 @@ h1 {
 }
 
 .life-slider-controls span {
-  min-width: 42px;
+  min-width: 38px;
   text-align: center;
   font-size: 11px;
   font-variant-numeric: tabular-nums;
+}
+
+.life-section {
+  width: min(100%, 520px);
+  margin: 28px auto 0;
+}
+
+.life-form {
+  margin-top: 12px;
 }
 
 @keyframes lifeStageIn {
@@ -1606,5 +1624,57 @@ h1 {
   to {
     opacity: 1;
     transform: translateX(0);
+  }
+}
+
+@media (min-width: 641px) {
+  .life-page {
+    display: block;
+  }
+
+  .life-page > h1 {
+    grid-column: auto;
+  }
+
+  .life-page .progress-list,
+  .life-page .life-section {
+    margin-top: 28px;
+  }
+}
+
+@media (max-width: 640px) {
+  .life-viewer {
+    margin-top: 24px;
+  }
+
+  .life-scale-tabs {
+    gap: 18px;
+    margin-bottom: 16px;
+  }
+
+  .life-scale-tab {
+    font-size: 13px;
+  }
+
+  .life-stage {
+    padding-top: 18px;
+  }
+
+  .life-stage-header {
+    margin-bottom: 18px;
+  }
+
+  .life-stage-visual {
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: none;
+  }
+
+  .life-stage-visual::-webkit-scrollbar {
+    display: none;
+  }
+
+  .life-slider-controls {
+    margin-top: 20px;
   }
 }
