@@ -4,7 +4,7 @@ import { createHash } from 'node:crypto'
 const assets = readdirSync('dist/assets').map(file => `/assets/${file}`)
 const fonts = readdirSync('dist/fonts').filter(file => file.endsWith('.woff2')).map(file => `/fonts/${file}`)
 const pulse = readdirSync('dist/pulse').map(file => `/pulse/${file}`)
-const files = ['/index.html', '/manifest.webmanifest', '/stoic-favicon.svg', '/stoic-symbol.svg', '/stoic-symbol-180.png', '/stoic-symbol-192.png', '/stoic-symbol-512.png', ...assets, ...pulse, ...fonts]
+const files = ['/index.html', '/manifest.webmanifest', '/stoic-favicon.svg', '/stoic-comforter.svg', '/stoic-comforter-180.png', '/stoic-comforter-192.png', '/stoic-comforter-512.png', ...assets, ...pulse, ...fonts]
 const hash = createHash('sha256')
 for (const file of files) hash.update(readFileSync(`dist${file}`))
 const version = hash.digest('hex').slice(0, 12)
