@@ -1912,3 +1912,14 @@ h1 { line-height: 1.3; }
     font-size: clamp(54px, 18vw, 72px);
   }
 }
+
+.clock-page .moments .moment-exact-time {
+  margin-top: 18px;
+  gap: 18px;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+}
+
+.clock-page .moments .moment-progress-copy {
+  margin-top: 24px;
+}
