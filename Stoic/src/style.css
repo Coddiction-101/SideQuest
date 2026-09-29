@@ -1587,3 +1587,154 @@ h1 { line-height: 1.3; }
   line-height: 1.4;
   text-align: left;
 }
+
+/* === Moments polish pass === */
+
+.clock-page .moments {
+  width: min(100%, 620px);
+}
+
+/* Secondary switch should feel lighter than the main Clock switch */
+.clock-page .moments .moment-type-switch {
+  width: min(100%, 220px);
+  padding: 3px;
+  margin-bottom: 34px;
+  border-color: color-mix(in srgb, var(--line) 80%, transparent);
+  background: color-mix(in srgb, var(--surface) 92%, var(--ink) 8%);
+}
+
+.clock-page .moments .moment-type-switch button {
+  min-height: 40px;
+  font-size: 13px;
+}
+
+.clock-page .moments .moment-type-switch .moment-type-active,
+.clock-page .moments .moment-type-switch button[aria-selected='true'] {
+  background: var(--selected);
+  color: var(--ink);
+  box-shadow: inset 0 -2px 0 var(--accent);
+}
+
+/* Empty state */
+.clock-page .moments .moment-empty {
+  margin-bottom: 30px;
+}
+
+.clock-page .moments .moment-empty h2 {
+  max-width: 560px;
+  margin-inline: auto;
+  font-size: clamp(36px, 5.5vw, 56px);
+  line-height: 1;
+}
+
+.clock-page .moments .moment-empty p {
+  max-width: 430px;
+  margin-top: 14px;
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+/* Divider before form */
+.clock-page .moments .moment-form {
+  position: relative;
+  padding-top: 26px;
+}
+
+.clock-page .moments .moment-form::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: min(100%, 520px);
+  height: 1px;
+  background: var(--line);
+  transform: translateX(-50%);
+}
+
+/* Better spacing */
+.clock-page .moments .moment-form {
+  grid-template-columns: 1fr 1fr;
+  column-gap: 18px;
+  row-gap: 18px;
+}
+
+/* Labels */
+.clock-page .moments .moment-form label {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+/* Inputs */
+.clock-page .moments .moment-form input {
+  min-height: 52px;
+  margin-top: 8px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--surface) 94%, var(--ink) 6%);
+  font-size: 15px;
+}
+
+.clock-page .moments .moment-form input:hover {
+  border-color: color-mix(in srgb, var(--muted) 55%, var(--line));
+}
+
+.clock-page .moments .moment-form input:focus-visible {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 14%, transparent);
+}
+
+/* Name field slightly stronger */
+.clock-page .moments .moment-form label:first-child input {
+  font-size: 16px;
+  color: var(--ink);
+}
+
+/* Future moment result */
+.clock-page .moments .moment-stage {
+  padding-top: 4px;
+}
+
+.clock-page .moments .moment-kicker {
+  color: var(--accent);
+  opacity: 0.9;
+}
+
+.clock-page .moments .moment-number {
+  margin-top: 10px;
+}
+
+.clock-page .moments .moment-progress-copy {
+  margin-top: 16px;
+}
+
+/* Dots */
+.clock-page .moments .moment-dot {
+  opacity: 0.42;
+}
+
+.clock-page .moments .moment-dot--elapsed {
+  background: var(--accent);
+  opacity: 1;
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .clock-page .moments {
+    width: 100%;
+  }
+
+  .clock-page .moments .moment-empty h2 {
+    font-size: clamp(32px, 10vw, 44px);
+  }
+
+  .clock-page .moments .moment-form {
+    grid-template-columns: 1fr;
+    padding-top: 22px;
+  }
+
+  .clock-page .moments .moment-form input {
+    min-height: 50px;
+  }
+}
