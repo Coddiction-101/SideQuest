@@ -1,7 +1,7 @@
 # Typography and performance update ? 2026-09-29
 
 - UI: Satoshi, 400/500/700, from Fontshare (https://www.fontshare.com/fonts/satoshi). License: ITF Free Font License, https://www.fontshare.com/licenses/itf-ffl. The build downloads the official WOFF2 assets; raw font files are not committed. Browser requests are same-origin and fonts are included in the offline cache.
-- Display: locally installed Baskerville or Baskerville Old Face, regular weight; Libre Baskerville Regular is the packaged fallback. Libre Baskerville is supplied by @fontsource/libre-baskerville under its included OFL license. The project does not redistribute the system Baskerville font.
+- Display: locally installed Baskerville, regular weight; Libre Baskerville Regular is the packaged fallback. Libre Baskerville is supplied by @fontsource/libre-baskerville under its included OFL license. The project does not redistribute the system Baskerville font.
 - Replaced the lifetime estimate with a Time view containing Today, Month and Year. Existing saved profiles/backups are still readable; stored data is not deleted.
 - Replaced whole-app 200 ms polling with second-aligned updates that stop while the document is hidden and refresh on return.
 - Memoized dot grids and replaced per-dot JavaScript animation with one reduced-motion-aware CSS transition. Removed animejs and duplicate time-view layout rules.
