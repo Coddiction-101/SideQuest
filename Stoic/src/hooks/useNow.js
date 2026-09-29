@@ -1,16 +1,23 @@
-import { useEffect, useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 
 export function useNow() {
   const [now, setNow] = useState(Date.now)
   useEffect(() => {
-    const update = () => setNow(Date.now())
-    const interval = window.setInterval(update, 200)
-    window.addEventListener('focus', update)
-    document.addEventListener('visibilitychange', update)
+    let timeout
+    const tick = () => {
+      clearTimeout(timeout)
+      if (document.hidden) return
+      const time = Date.now()
+      setNow(time)
+      timeout = window.setTimeout(tick, 1000 - time % 1000)
+    }
+    tick()
+    window.addEventListener('focus', tick)
+    document.addEventListener('visibilitychange', tick)
     return () => {
-      window.clearInterval(interval)
-      window.removeEventListener('focus', update)
-      document.removeEventListener('visibilitychange', update)
+      clearTimeout(timeout)
+      window.removeEventListener('focus', tick)
+      document.removeEventListener('visibilitychange', tick)
     }
   }, [])
   return now

@@ -7,18 +7,17 @@
     "node": "24.x"
   },
   "scripts": {
-    "test": "node --test --test-isolation=none",
+    "test": "node --test --test-isolation=none tests/*.test.js",
     "dev": "vite",
-    "build": "node scripts/generate-icons.mjs && vite build && node scripts/build-pwa.mjs",
-    "preview": "vite preview"
+    "build": "node scripts/generate-fonts.mjs && node scripts/generate-icons.mjs && vite build && node scripts/build-pwa.mjs",
+    "preview": "vite preview",
+    "predev": "node scripts/generate-fonts.mjs"
   },
   "devDependencies": {
     "vite": "^8.2.2"
   },
   "dependencies": {
-    "@fontsource/eb-garamond": "^5.3.0",
-    "@fontsource/raleway": "^5.3.0",
-    "animejs": "^3.2.2",
+    "@fontsource/libre-baskerville": "^5.3.0",
     "react": "^19.3.0",
     "react-dom": "^19.3.0"
   }

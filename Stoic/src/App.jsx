@@ -99,7 +99,7 @@ export default function App() {
         {activePage === 'Today' && <Today today={today} now={now} tasks={data.tasksByDay[today] ?? []} updateTasks={updateTasks} deleteTask={deleteTask} habits={data.habits} toggleHabit={toggleHabit} onNavigate={navigate} />}
         {activePage === 'Habits' && <Habits habits={data.habits} today={today} onAdd={addHabit} onToggle={toggleHabit} onDelete={deleteHabit} />}
         {activePage === 'Clock' && <Clock clock={clock} now={now} sound={Boolean(data.sound)} onToggleSound={() => { if (!data.sound) void chime.arm(); setData(current => ({ ...current, sound: !current.sound })) }} previewSound={chime.preview} />}
-        {activePage === 'Life' && <Life now={now} profile={data.life} onSave={life => setData(current => ({ ...current, life }))} />}
+        {activePage === 'Time' && <Life now={now} />}
 
       </main>
       {undo && <div className="undo-toast" onMouseEnter={() => setUndoPaused(true)} onMouseLeave={() => setUndoPaused(false)} onFocus={() => setUndoPaused(true)} onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) setUndoPaused(false) }}>

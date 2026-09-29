@@ -174,7 +174,7 @@ try {
   await addTask('Works offline too')
   await reload()
   assert.match(await evaluate(`document.querySelector('.task-count').textContent`), /1 of 2/)
-  for (const section of ['Habits', 'Clock', 'Life', 'Today']) {
+  for (const section of ['Habits', 'Clock', 'Time', 'Today']) {
     await evaluate(`Array.from(document.querySelectorAll('.navigation button')).find(button => button.textContent.trim() === ${JSON.stringify(section)}).click()`)
     await sleep(100)
     assert.equal(await evaluate(`!!document.querySelector('h1')`), true)

@@ -137,11 +137,19 @@ try {
   assert.notEqual(await evaluate(`document.querySelector('.countdown-unit strong').textContent`), '00')
   await fill('input[aria-label="Countdown target"]', '2020-01-01T12:00')
   await waitFor(`document.querySelector('.clock-caption').textContent.includes('arrived')`)
-  await navigate('Life')
-  await fill('.life-form input[type="date"]', '2000-09-10')
-  await evaluate(`document.querySelector('.life-form').requestSubmit()`)
-  await waitFor(`!!document.querySelector('.life-ring')`)
-  assert.equal(await evaluate(`document.querySelectorAll('[role="progressbar"]').length`), 4)
+  await navigate('Time')
+  assert.deepEqual(await evaluate(`Array.from(document.querySelectorAll('.life-scale-tab')).map(b => b.textContent)`), ['Today', 'Month', 'Year'])
+  assert.equal(await evaluate(`!!document.querySelector('.life-form')`), false)
+  await click('#scale-2')
+  await evaluate("document.querySelector('#scale-2').focus()")
+  assert.ok(await evaluate(`document.querySelectorAll('.time-dot').length >= 365`))
+  await call('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Home', code: 'Home' })
+  await waitFor(`document.querySelector('#scale-0').getAttribute('aria-selected') === 'true'`)
+  assert.equal(await evaluate(`document.querySelectorAll('.time-dot').length`), 24)
+  await evaluate('document.fonts.ready')
+  assert.ok(await evaluate(`document.fonts.check('16px Satoshi')`))
+  assert.match(await evaluate(`getComputedStyle(document.querySelector('h1')).fontFamily`), /Baskerville/)
+  assert.equal(await evaluate(`getComputedStyle(document.querySelector('h1')).fontWeight`), '400')
   await screenshot('life-mobile')
   await click('.theme-toggle')
   await waitFor(`document.documentElement.dataset.theme === 'dark'`)
@@ -151,8 +159,8 @@ try {
   assert.equal(await evaluate(`document.documentElement.dataset.theme`), 'dark')
   assert.match(await evaluate(`document.querySelector('.task-count').textContent`), /1 of 3/)
   assert.equal(await evaluate(`document.querySelectorAll('.preview-list li').length`), 3)
-  await navigate('Life')
-  assert.equal(await evaluate(`!!document.querySelector('.life-ring')`), true)
+  await navigate('Time')
+  assert.equal(await evaluate(`document.querySelectorAll('.life-scale-tab').length`), 3)
   await navigate('Today')
   await click('.today .task-row:nth-child(2) summary')
   await click('.today .task-row:nth-child(2) .task-actions button:last-child')
@@ -173,7 +181,7 @@ try {
   await click('.toast-dismiss')
   for (const [width, height] of [[320, 568], [390, 667], [390, 844], [768, 520], [1024, 600], [1240, 597], [1440, 900], [1920, 1080], [844, 390]]) {
     await call('Emulation.setDeviceMetricsOverride', { width, height, deviceScaleFactor: 1, mobile: width < 641 })
-    for (const page of ['Today', 'Habits', 'Clock', 'Life']) {
+    for (const page of ['Today', 'Habits', 'Clock', 'Time']) {
       await navigate(page)
       assert.equal(await evaluate(`document.documentElement.scrollWidth > innerWidth`), false, `${page} overflows at ${width}px`)
       const measurements = await evaluate(`({ documentHeight: document.documentElement.scrollHeight, height: innerHeight, controlsBottom: document.querySelector('.app-controls').getBoundingClientRect().bottom })`)
@@ -187,6 +195,13 @@ try {
         assert.equal(await evaluate(`Math.round(document.querySelector('.desktop-header').getBoundingClientRect().top)`), 0, 'Header stays reachable in short windows')
         await evaluate('window.scrollTo(0, 0)')
       } else assert.ok(measurements.documentHeight <= height + 1, `${page} requires scrolling at ${width}x${height}`)
+      if (page === 'Time') {
+        for (const index of [0, 1, 2]) {
+          await click('#scale-' + index)
+          assert.equal(await evaluate('document.documentElement.scrollWidth > innerWidth'), false, 'Time scale stays within window')
+          assert.ok(await evaluate('document.documentElement.scrollHeight <= innerHeight + 1'), 'Time scale fits the standard viewport')
+        }
+      }
       if (page === 'Clock') {
         for (const mode of ['Timer', 'Stopwatch', 'Countdown']) {
           await click(`#tab-${mode}`)

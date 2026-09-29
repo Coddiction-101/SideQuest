@@ -28,3 +28,6 @@ today-mobile.png
 *.njsproj
 *.sln
 *.sw?
+
+# Downloaded from Fontshare during build
+public/fonts/*.woff2
