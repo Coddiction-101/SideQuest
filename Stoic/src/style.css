@@ -502,6 +502,12 @@ h1 {
   min-width: 0;
 }
 
+
+.stopwatch-ms {
+  font-size: 0.45em;
+  opacity: 0.65;
+  font-variant-numeric: tabular-nums;
+}
 .segmented-control {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
