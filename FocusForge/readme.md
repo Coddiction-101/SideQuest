@@ -1,15 +1,33 @@
 # FocusForge
 
-A minimal deep-work timer built with React, Vite, and GSAP.
+FocusForge is a minimal deep-work timer designed to help you choose one task, reduce distractions, and stay focused until the session ends.
 
-## Development
+## Live project
+
+[View FocusForge](https://focusforge-deep-work.vercel.app/)
+
+## Features
+
+- 15, 25, and 45-minute focus sessions
+- Start and pause controls
+- Live countdown timer
+- Minimal responsive interface
+- Subtle GSAP entrance animations
+
+## Built with
+
+- React
+- Vite
+- GSAP
+
+## Run locally
 
 ```bash
 npm install
 npm run dev
 ```
 
-## Production build
+## Build
 
 ```bash
 npm run build
