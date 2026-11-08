@@ -113,9 +113,9 @@ function App() {
       <section className="session-layout" aria-labelledby="session-title">
         <div className="session-copy">
           <p className="session-kicker">Deep work session</p>
-          <h1 id="session-title">Get the work<br />that matters done.</h1>
+          <h1 id="session-title">Stop making excuses.<br />Get to work.</h1>
           <p className="session-description">
-            Pick one real task, cut the noise, and give it your full attention.
+            Pick the task. Kill the noise. Put in the work until it is done.
           </p>
           <label className="task-field">
             <span>Current task</span>
