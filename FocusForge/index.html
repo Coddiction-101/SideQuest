@@ -13,7 +13,6 @@
   </head>
   <body>
 
-    <!-- ░░ SIDEBAR ░░ -->
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-brand">
         <span class="brand-icon"><i class="ri-crosshair-2-line"></i></span>
@@ -35,7 +34,6 @@
         </button>
       </nav>
 
-      <!-- Theme Switcher -->
       <div class="theme-switcher">
         <p class="theme-label">Ambient Mode</p>
         <div class="theme-options">
@@ -62,10 +60,8 @@
       </div>
     </aside>
 
-    <!-- ░░ MAIN ░░ -->
     <main class="main-content" id="main-content">
 
-      <!-- Top Bar -->
       <header class="topbar">
         <div class="topbar-left">
           <button class="menu-toggle" id="menuToggle" onclick="toggleSidebar()" aria-label="Toggle sidebar"><i class="ri-menu-line"></i></button>
@@ -77,14 +73,12 @@
         </div>
       </header>
 
-      <!-- ── SECTION: Dashboard ── -->
       <section class="section active" id="section-dashboard">
         <div class="section-header">
           <h1 class="section-title">Command Center</h1>
           <p class="section-sub">Your structured deep work overview.</p>
         </div>
 
-        <!-- Stat Cards -->
         <div class="stats-grid">
           <div class="stat-card" id="card-sessions">
             <div class="stat-icon"><i class="ri-focus-3-line"></i></div>
@@ -116,7 +110,6 @@
           </div>
         </div>
 
-        <!-- Mental Load Meter -->
         <div class="card mental-load-card">
           <div class="card-header">
             <h2 class="card-title"><i class="ri-mental-health-line card-title-icon"></i> Mental Load Meter</h2>
@@ -131,7 +124,6 @@
           </div>
         </div>
 
-        <!-- Quick Actions -->
         <div class="quick-actions">
           <button class="qa-btn primary" onclick="showSection('focus', document.getElementById('nav-focus'))">
             <i class="ri-play-fill"></i> Start Deep Work
@@ -141,7 +133,6 @@
           </button>
         </div>
 
-        <!-- Task Preview -->
         <div class="card">
           <div class="card-header">
             <h2 class="card-title">Today's Priority Tasks</h2>
@@ -153,14 +144,12 @@
         </div>
       </section>
 
-      <!-- ── SECTION: Tasks ── -->
       <section class="section" id="section-tasks">
         <div class="section-header">
           <h1 class="section-title">Priority Task Board</h1>
           <p class="section-sub">Organize by what truly matters.</p>
         </div>
 
-        <!-- Task Input -->
         <div class="card task-input-card">
           <div class="task-input-row">
             <input type="text" id="task-input" class="task-text-input" placeholder="What needs to be done?" maxlength="120" />
@@ -173,7 +162,6 @@
           </div>
         </div>
 
-        <!-- Filter Bar -->
         <div class="filter-bar">
           <button class="filter-btn active" data-filter="all" onclick="filterTasks('all', this)">All</button>
           <button class="filter-btn" data-filter="critical" onclick="filterTasks('critical', this)"><i class="ri-error-warning-line"></i> Critical</button>
@@ -182,13 +170,11 @@
           <button class="filter-btn" data-filter="done" onclick="filterTasks('done', this)"><i class="ri-check-double-line"></i> Done</button>
         </div>
 
-        <!-- Task List -->
         <div class="task-list" id="task-list">
           <p class="empty-state" id="task-empty">No tasks yet. Add one above.</p>
         </div>
       </section>
 
-      <!-- ── SECTION: Deep Work / Focus ── -->
       <section class="section" id="section-focus">
         <div class="section-header">
           <h1 class="section-title">Deep Work Mode</h1>
@@ -196,7 +182,6 @@
         </div>
 
         <div class="focus-hub">
-          <!-- Timer Card -->
           <div class="card focus-timer-card">
             <div class="focus-mode-label" id="focus-mode-label">Focus Session</div>
             <div class="timer-display" id="timer-display">25:00</div>
@@ -219,7 +204,6 @@
             </div>
           </div>
 
-          <!-- Session Info -->
           <div class="focus-sidebar-cards">
             <div class="card focus-info-card">
               <h3 class="focus-info-title">Session Focus</h3>
@@ -235,7 +219,6 @@
         </div>
       </section>
 
-      <!-- ── SECTION: Stats ── -->
       <section class="section" id="section-stats">
         <div class="section-header">
           <h1 class="section-title">Focus Statistics</h1>
@@ -265,7 +248,6 @@
           </div>
         </div>
 
-        <!-- Completion Rate -->
         <div class="card">
           <div class="card-header">
             <h2 class="card-title">Task Completion Rate</h2>
@@ -276,7 +258,6 @@
           <p class="completion-rate-text" id="completion-rate-text">0% of tasks completed</p>
         </div>
 
-        <!-- Session History -->
         <div class="card">
           <div class="card-header">
             <h2 class="card-title">Session History</h2>
@@ -290,7 +271,6 @@
 
     </main>
 
-    <!-- ░░ FOCUS OVERLAY (Full screen mode) ░░ -->
     <div class="focus-overlay" id="focus-overlay">
       <div class="focus-overlay-inner">
         <div class="fo-phase" id="fo-phase">Focus Session</div>

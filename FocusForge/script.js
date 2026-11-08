@@ -1,8 +1,6 @@
-/* ═══════════════════════════════
-   FOCUSFORGE — script.js
-   ═══════════════════════════════ */
 
-// ── State ──
+
+
 const state = {
   tasks: [],
   sessions: 0,
@@ -17,7 +15,7 @@ const state = {
   fullFocus: false,
 };
 
-// ── Init ──
+
 document.addEventListener('DOMContentLoaded', () => {
   loadState();
   updateClock();
@@ -29,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initTimerRing();
 });
 
-// ── Persist ──
+
 function saveState() {
   localStorage.setItem('ff_tasks', JSON.stringify(state.tasks));
   localStorage.setItem('ff_sessions', state.sessions);
@@ -46,7 +44,7 @@ function loadState() {
   applyTheme(theme);
 }
 
-// ── Clock ──
+
 function updateClock() {
   const now = new Date();
   const timeEl = document.getElementById('time-display');
@@ -55,7 +53,7 @@ function updateClock() {
   if (dateEl) dateEl.textContent = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
 }
 
-// ── Navigation ──
+
 function showSection(name, btn) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.getElementById('section-' + name).classList.add('active');
@@ -70,7 +68,7 @@ function showSection(name, btn) {
   }
 }
 
-// ── Sidebar Toggle ──
+
 function toggleSidebar() {
   const sidebar = document.getElementById('sidebar');
   const main = document.getElementById('main-content');
@@ -83,7 +81,7 @@ function toggleSidebar() {
   }
 }
 
-// ── Theme ──
+
 function setTheme(theme) {
   applyTheme(theme);
   localStorage.setItem('ff_theme', theme);
@@ -92,7 +90,7 @@ function setTheme(theme) {
 function applyTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
   updateThemeButtons(theme);
-  // Update ring stroke color
+
   const ring = document.getElementById('ring-fill');
   if (ring) {
     const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
@@ -107,9 +105,7 @@ function updateThemeButtons(theme) {
   });
 }
 
-// ══════════════════════════
-// TASKS
-// ══════════════════════════
+
 function addTask() {
   const input = document.getElementById('task-input');
   const priority = document.getElementById('task-priority');
@@ -124,7 +120,7 @@ function addTask() {
   renderDashboardPreview();
 }
 
-// Enter key in task input
+
 document.addEventListener('DOMContentLoaded', () => {
   const ti = document.getElementById('task-input');
   if (ti) ti.addEventListener('keydown', e => { if (e.key === 'Enter') addTask(); });
@@ -170,7 +166,7 @@ function renderTasks() {
   if (state.currentFilter === 'done') filtered = state.tasks.filter(t => t.done);
   else if (state.currentFilter !== 'all') filtered = state.tasks.filter(t => t.priority === state.currentFilter && !t.done);
 
-  // Remove old task items
+
   list.querySelectorAll('.task-item').forEach(el => el.remove());
 
   if (filtered.length === 0) {
@@ -209,7 +205,6 @@ function escHtml(str) {
   return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
-// ── Dashboard Preview ──
 function renderDashboardPreview() {
   const container = document.getElementById('dash-task-preview');
   if (!container) return;
@@ -225,23 +220,18 @@ function renderDashboardPreview() {
   });
 }
 
-// ══════════════════════════
-// MENTAL LOAD
-// ══════════════════════════
 function updateMentalLoad() {
   const weights = { critical: 3, important: 2, optional: 1 };
-  const maxLoad = 30; // 10 critical tasks = 100%
+  const maxLoad = 30;
   let load = 0;
   state.tasks.filter(t => !t.done).forEach(t => { load += weights[t.priority] || 1; });
   const pct = Math.min(Math.round((load / maxLoad) * 100), 100);
 
-  // Main meter
   const fill = document.getElementById('ml-meter-fill');
   const pctEl = document.getElementById('ml-percent');
   const badge = document.getElementById('ml-badge');
   const tip = document.getElementById('ml-tip');
 
-  // Sidebar mini
   const sidebarFill = document.getElementById('sidebar-ml-fill');
   const sidebarVal = document.getElementById('sidebar-ml-val');
 
@@ -257,10 +247,7 @@ function updateMentalLoad() {
   if (sidebarVal) sidebarVal.textContent = pct + '%';
 }
 
-// ══════════════════════════
-// TIMER
-// ══════════════════════════
-const RING_CIRC = 2 * Math.PI * 88; // = 552.9
+const RING_CIRC = 2 * Math.PI * 88;
 
 function initTimerRing() {
   const ring = document.getElementById('ring-fill');
@@ -359,13 +346,11 @@ function completeSession() {
   document.getElementById('btn-start').textContent = '▶ Start';
 }
 
-// ── Full Focus Overlay ──
 function exitFullFocus() {
   state.fullFocus = false;
   document.getElementById('focus-overlay').classList.remove('active');
 }
 
-// ── Session Log ──
 function renderSessionLog() {
   const log = document.getElementById('session-log');
   if (!log) return;
@@ -378,9 +363,6 @@ function renderSessionLog() {
   ).join('');
 }
 
-// ══════════════════════════
-// STATS
-// ══════════════════════════
 function renderStats() {
   const done = state.tasks.filter(t => t.done).length;
   const total = state.tasks.length;
@@ -389,13 +371,11 @@ function renderStats() {
     ? `${Math.floor(state.totalFocusMinutes / 60)}h ${state.totalFocusMinutes % 60}m`
     : state.totalFocusMinutes + ' min';
 
-  // Dashboard
   setEl('dash-sessions', state.sessions);
   setEl('dash-time', timeStr);
   setEl('dash-tasks', done);
   setEl('dash-streak', calcStreak());
 
-  // Stats page
   setEl('stat-sessions', state.sessions);
   setEl('stat-time', timeStr);
   setEl('stat-tasks-done', done);
