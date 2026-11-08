@@ -3,7 +3,7 @@
   --ink: #171717;
   --muted: #686868;
   --border: #d8d8d2;
-  font-family: Inter, Arial, sans-serif;
+  font-family: 'Poppins', sans-serif;
   color: var(--ink);
   background: var(--background);
   font-synthesis: none;

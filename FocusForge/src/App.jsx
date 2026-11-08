@@ -105,7 +105,7 @@ function App() {
     <main className="focusforge" ref={pageRef}>
       <header className="topbar">
         <a className="brand focusmark" href="/" aria-label="FocusForge home">
-          <span className="brand-mark" aria-hidden="true"></span>
+          <i className="ri-focus-3-line brand-focus-icon" aria-hidden="true"></i>
           <span>FocusForge</span>
         </a>
       </header>

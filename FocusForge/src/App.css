@@ -17,15 +17,19 @@
   align-items: center;
   gap: 10px;
   color: var(--ink);
+  font-family: 'Poppins', sans-serif;
   font-weight: 700;
   text-decoration: none;
 }
 
-.brand-mark {
-  width: 14px;
-  height: 14px;
-  border: 4px solid var(--ink);
-  border-radius: 50%;
+.brand-focus-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  color: var(--ink);
+  font-size: 22px;
+  line-height: 1;
 }
 
 .session-layout {
@@ -39,7 +43,7 @@
 .session-kicker {
   margin-bottom: 18px;
   color: var(--muted);
-  font-family: monospace;
+  font-family: 'Poppins', sans-serif;
   font-size: 0.72rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -49,7 +53,7 @@
   max-width: 760px;
   margin: 0;
   color: var(--ink);
-  font-family: Georgia, serif;
+  font-family: 'Lora', serif;
   font-size: clamp(3.5rem, 8vw, 7rem);
   line-height: 0.92;
   letter-spacing: -0.07em;
@@ -71,7 +75,7 @@
 
 .task-field span {
   color: var(--muted);
-  font-family: monospace;
+  font-family: 'Poppins', sans-serif;
   font-size: 0.68rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -116,14 +120,14 @@
 
 .session-time {
   color: var(--ink);
-  font-family: monospace;
+  font-family: 'Lora', serif;
   font-size: clamp(2.5rem, 5vw, 4.5rem);
 }
 
 .session-state {
   margin-top: 4px;
   color: var(--muted);
-  font-family: monospace;
+  font-family: 'Poppins', sans-serif;
   font-size: 0.7rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -217,7 +221,7 @@
 
 .data-label {
   color: var(--muted);
-  font-family: monospace;
+  font-family: 'Poppins', sans-serif;
   font-size: 0.66rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
