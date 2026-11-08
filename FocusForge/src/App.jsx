@@ -69,7 +69,6 @@ function App() {
 
   const displayMinutes = String(Math.floor(secondsLeft / 60)).padStart(2, '0')
   const displaySeconds = String(secondsLeft % 60).padStart(2, '0')
-  const dialDurations = [5, 15, 25, 45, 60, 90]
   const todaysSessions = sessions.filter(
     (session) => new Date(session.completedAt).toDateString() === today,
   )
@@ -102,6 +101,31 @@ function App() {
     setRunning(true)
   }
 
+  const changeDuration = (duration) => {
+    const nextMinutes = Math.min(180, Math.max(1, Math.round(duration)))
+    chooseDuration(nextMinutes)
+  }
+
+  const handleRingDuration = (event) => {
+    if (running) return
+    const ring = event.currentTarget.getBoundingClientRect()
+    const x = event.clientX - ring.left - ring.width / 2
+    const y = event.clientY - ring.top - ring.height / 2
+    const angle = (Math.atan2(y, x) * 180 / Math.PI + 450) % 360
+    const nextMinutes = Math.round(1 + (angle / 360) * 179)
+    changeDuration(nextMinutes)
+  }
+
+  const handleRingPointer = (event) => {
+    event.currentTarget.setPointerCapture(event.pointerId)
+    handleRingDuration(event)
+  }
+
+  const durationProgress = ((minutes - 1) / 179) * 100
+  const durationAngle = ((minutes - 1) / 179) * 360 - 90
+  const handleX = 50 + Math.cos(durationAngle * Math.PI / 180) * 50
+  const handleY = 50 + Math.sin(durationAngle * Math.PI / 180) * 50
+
   return (
     <main className="focusforge" ref={pageRef}>
       <header className="topbar">
@@ -114,7 +138,7 @@ function App() {
       <section className="session-layout" aria-labelledby="session-title">
         <div className="session-copy">
           <p className="session-kicker">Deep work session</p>
-          <h1 id="session-title">Lock in and get things done, man. :)</h1>
+          <h1 id="session-title">LOCK IN AND GET THINGS DONE, MAN. :)</h1>
           <p className="session-description">
             No Excuses
           </p>
@@ -129,41 +153,47 @@ function App() {
           </label>
         </div>
 
-        <div className={`session-ring${running ? ' is-running' : ''}`}>
+        <div
+          className={`session-ring${running ? ' is-running' : ''}`}
+          style={{
+            '--duration-progress': `${durationProgress}%`,
+            '--handle-x': `${handleX}%`,
+            '--handle-y': `${handleY}%`,
+          }}
+          onPointerDown={running ? undefined : handleRingPointer}
+          onPointerMove={running ? undefined : (event) => {
+            if (event.buttons === 1) handleRingDuration(event)
+          }}
+        >
           <div className="session-ring-inner">
             <span className="session-time">{displayMinutes}:{displaySeconds}</span>
             <span className="session-state">{running ? 'In focus' : 'Ready'}</span>
             <span className="session-task">{task.trim() || 'Choose a task'}</span>
           </div>
+          {!running && (
+            <>
+              <span className="ring-duration">{minutes}<small>MIN</small></span>
+              <span className="ring-duration-handle" aria-hidden="true"></span>
+            </>
+          )}
         </div>
       </section>
 
       <div className="session-controls">
-        <div className="duration-dial" aria-label="Choose focus duration">
-          <div className="dial-arc" aria-hidden="true"></div>
-          <span className="dial-selection">{minutes}<small>min</small></span>
-          {dialDurations.map((duration, index) => {
-            const angle = Math.PI - (index / (dialDurations.length - 1)) * Math.PI
-            const radius = 105
-            const centerX = 130
-            const centerY = 126
-            const left = centerX + Math.cos(angle) * radius
-            const top = centerY + Math.sin(angle) * radius
-
-            return (
-              <button
-                key={duration}
-                className={minutes === duration ? 'dial-time is-selected' : 'dial-time'}
-                style={{ '--dial-x': `${left}px`, '--dial-y': `${top}px` }}
-                type="button"
-                onClick={() => chooseDuration(duration)}
-                disabled={running}
-                aria-label={`${duration} minutes`}
-              >
-                {duration}
-              </button>
-            )
-          })}
+        <div className="duration-slider">
+          <div className="slider-heading">
+            <span>Focus length</span>
+            <strong>{minutes} min</strong>
+          </div>
+          <input
+            type="range"
+            min="1"
+            max="180"
+            value={minutes}
+            onChange={(event) => changeDuration(Number(event.target.value))}
+            disabled={running}
+            aria-label="Focus duration"
+          />
         </div>
         <div className="custom-duration">
           <input
