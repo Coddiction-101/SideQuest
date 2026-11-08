@@ -35,6 +35,23 @@ function App() {
         ease: 'power3.out',
         stagger: 0.08,
       })
+      gsap.from('.cutout-word span', {
+        opacity: 0,
+        x: -5,
+        y: gsap.utils.wrap([-6, 5]),
+        rotation: gsap.utils.wrap([-8, 7]),
+        duration: 0.38,
+        delay: 0.45,
+        stagger: 0.035,
+        ease: 'power2.out',
+      })
+      gsap.from('.cutout-line', {
+        scaleX: 0,
+        transformOrigin: 'left center',
+        duration: 0.55,
+        delay: 0.8,
+        ease: 'power3.inOut',
+      })
     }, pageRef)
 
     return () => context.revert()
@@ -113,7 +130,15 @@ function App() {
       <section className="session-layout" aria-labelledby="session-title">
         <div className="session-copy">
           <p className="session-kicker">Deep work session</p>
-          <h1 id="session-title">Stop making excuses.<br />Get to work.</h1>
+          <div className="headline-wrap">
+            <span className="cutout-word" aria-label="Excuses">
+              {'Excuses'.split('').map((letter, index) => (
+                <span key={`${letter}-${index}`} style={{ '--letter-index': index }}>{letter}</span>
+              ))}
+              <span className="cutout-line" aria-hidden="true"></span>
+            </span>
+            <h1 id="session-title">Lock in and get things done, man. :)</h1>
+          </div>
           <p className="session-description">
             Pick the task. Kill the noise. Put in the work until it is done.
           </p>
