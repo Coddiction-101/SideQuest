@@ -69,6 +69,7 @@ function App() {
 
   const displayMinutes = String(Math.floor(secondsLeft / 60)).padStart(2, '0')
   const displaySeconds = String(secondsLeft % 60).padStart(2, '0')
+  const dialDurations = [5, 15, 25, 45, 60, 90]
   const todaysSessions = sessions.filter(
     (session) => new Date(session.completedAt).toDateString() === today,
   )
@@ -138,16 +139,32 @@ function App() {
       </section>
 
       <div className="session-controls">
-        {[15, 25, 45].map((duration) => (
-          <button
-            key={duration}
-            className={minutes === duration ? 'is-selected' : ''}
-            type="button"
-            onClick={() => chooseDuration(duration)}
-          >
-            {duration} min
-          </button>
-        ))}
+        <div className="duration-dial" aria-label="Choose focus duration">
+          <div className="dial-arc" aria-hidden="true"></div>
+          <span className="dial-selection">{minutes}<small>min</small></span>
+          {dialDurations.map((duration, index) => {
+            const angle = Math.PI - (index / (dialDurations.length - 1)) * Math.PI
+            const radius = 105
+            const centerX = 130
+            const centerY = 126
+            const left = centerX + Math.cos(angle) * radius
+            const top = centerY + Math.sin(angle) * radius
+
+            return (
+              <button
+                key={duration}
+                className={minutes === duration ? 'dial-time is-selected' : 'dial-time'}
+                style={{ '--dial-x': `${left}px`, '--dial-y': `${top}px` }}
+                type="button"
+                onClick={() => chooseDuration(duration)}
+                disabled={running}
+                aria-label={`${duration} minutes`}
+              >
+                {duration}
+              </button>
+            )
+          })}
+        </div>
         <div className="custom-duration">
           <input
             type="number"

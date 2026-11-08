@@ -147,7 +147,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  min-height: 64px;
+  min-height: 168px;
   border-top: 1px solid var(--border);
 }
 
@@ -164,6 +164,78 @@
   color: var(--background);
   border-color: var(--ink);
   background: var(--ink);
+}
+
+.duration-dial {
+  position: relative;
+  flex: 0 0 260px;
+  width: 260px;
+  height: 150px;
+  margin-right: 12px;
+}
+
+.dial-arc {
+  position: absolute;
+  right: 12px;
+  bottom: 0;
+  left: 12px;
+  height: 126px;
+  border: 1px solid var(--border);
+  border-bottom: 0;
+  border-radius: 118px 118px 0 0;
+}
+
+.dial-selection {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  display: grid;
+  min-width: 54px;
+  transform: translateX(-50%);
+  color: var(--ink);
+  text-align: center;
+  font-family: 'Lora', serif;
+  font-size: 1.55rem;
+  line-height: 1;
+}
+
+.dial-selection small {
+  margin-top: 5px;
+  color: var(--muted);
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.duration-dial .dial-time {
+  position: absolute;
+  z-index: 2;
+  top: var(--dial-y);
+  left: var(--dial-x);
+  width: 36px;
+  height: 36px;
+  min-height: 36px;
+  padding: 0;
+  transform: translate(-50%, -50%);
+  border: 1px solid transparent;
+  border-radius: 50%;
+  color: var(--muted);
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.72rem;
+  background: var(--background);
+}
+
+.duration-dial .dial-time:hover:not(:disabled),
+.duration-dial .dial-time.is-selected {
+  border-color: var(--ink);
+  color: var(--background);
+  background: var(--ink);
+}
+
+.duration-dial .dial-time:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
 }
 
 .custom-duration {
