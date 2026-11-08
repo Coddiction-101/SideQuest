@@ -49,32 +49,6 @@
   text-transform: uppercase;
 }
 
-.cutout-word {
-  position: relative;
-  display: inline-flex;
-  margin-left: 2px;
-  color: var(--ink);
-  font-family: 'Poppins', sans-serif;
-  font-size: inherit;
-  letter-spacing: 0;
-  white-space: nowrap;
-}
-
-.cutout-word span {
-  display: inline-block;
-}
-
-.cutout-line {
-  position: absolute;
-  right: -3px;
-  bottom: 48%;
-  left: -2px;
-  height: 1px;
-  content: '';
-  background: var(--ink);
-  transform: rotate(-5deg);
-}
-
 .session-copy h1 {
   max-width: 760px;
   margin: 0;
