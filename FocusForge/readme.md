@@ -1,6 +1,6 @@
 # FocusForge
 
-FocusForge is a minimal deep-work timer designed to help you choose one task, reduce distractions, and stay focused until the session ends.
+A minimal deep-work timer designed to help you choose one task, reduce distractions, and stay focused until the session ends.
 
 ## Live project
 
@@ -13,22 +13,3 @@ FocusForge is a minimal deep-work timer designed to help you choose one task, re
 - Live countdown timer
 - Minimal responsive interface
 - Subtle GSAP entrance animations
-
-## Built with
-
-- React
-- Vite
-- GSAP
-
-## Run locally
-
-```bash
-npm install
-npm run dev
-```
-
-## Build
-
-```bash
-npm run build
-```
