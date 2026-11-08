@@ -28,14 +28,6 @@
   border-radius: 50%;
 }
 
-.menu-button {
-  color: var(--ink);
-  border: 0;
-  background: transparent;
-  font: inherit;
-  cursor: pointer;
-}
-
 .session-layout {
   min-height: 520px;
   display: grid;
@@ -68,6 +60,38 @@
   margin-top: 28px;
   color: var(--muted);
   line-height: 1.7;
+}
+
+.task-field {
+  width: min(100%, 430px);
+  display: grid;
+  gap: 7px;
+  margin-top: 24px;
+}
+
+.task-field span {
+  color: var(--muted);
+  font-family: monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.task-field input {
+  width: 100%;
+  height: 44px;
+  padding: 0 0;
+  color: var(--ink);
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+  outline: 0;
+  background: transparent;
+  font: inherit;
+}
+
+.task-field input:focus {
+  border-bottom-color: var(--ink);
 }
 
 .session-ring {
@@ -105,6 +129,16 @@
   text-transform: uppercase;
 }
 
+.session-task {
+  max-width: 220px;
+  margin: 14px auto 0;
+  overflow: hidden;
+  color: var(--ink);
+  font-size: 0.78rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .session-controls {
   display: flex;
   align-items: center;
@@ -128,11 +162,74 @@
   background: var(--ink);
 }
 
+.custom-duration {
+  display: flex;
+  height: 38px;
+}
+
+.custom-duration input {
+  width: 82px;
+  height: 38px;
+  padding: 0 10px;
+  color: var(--ink);
+  border: 1px solid var(--border);
+  border-right: 0;
+  outline: 0;
+  background: transparent;
+}
+
+.custom-duration input:focus {
+  border-color: var(--ink);
+}
+
+.custom-duration button {
+  min-height: 38px;
+}
+
 .session-controls .start-button {
   margin-left: auto;
   color: var(--background);
   border-color: var(--ink);
   background: var(--ink);
+}
+
+.session-controls .reset-button {
+  border-color: transparent;
+}
+
+.focus-data {
+  display: grid;
+  grid-template-columns: 140px 140px minmax(0, 1fr);
+  gap: 1px;
+  margin-top: 32px;
+  border: 1px solid var(--border);
+  background: var(--border);
+}
+
+.focus-data > div {
+  min-height: 92px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 18px;
+  background: var(--background);
+}
+
+.data-label {
+  color: var(--muted);
+  font-family: monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.focus-data strong {
+  max-width: 100%;
+  overflow: hidden;
+  color: var(--ink);
+  font-size: 1rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 @media (max-width: 760px) {
@@ -154,5 +251,17 @@
   .session-controls {
     flex-wrap: wrap;
     padding-top: 14px;
+  }
+
+  .session-controls .start-button {
+    margin-left: 0;
+  }
+
+  .focus-data {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .focus-data .latest-task {
+    grid-column: 1 / -1;
   }
 }

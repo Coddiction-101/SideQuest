@@ -7,6 +7,17 @@ function App() {
   const [running, setRunning] = useState(false)
   const [minutes, setMinutes] = useState(25)
   const [secondsLeft, setSecondsLeft] = useState(25 * 60)
+  const [task, setTask] = useState('')
+  const [customMinutes, setCustomMinutes] = useState('')
+  const [sessions, setSessions] = useState(() => {
+    try {
+      const saved = window.localStorage.getItem('focusforge-sessions')
+      return saved ? JSON.parse(saved) : []
+    } catch {
+      return []
+    }
+  })
+  const [today] = useState(() => new Date().toDateString())
 
   useEffect(() => {
     const context = gsap.context(() => {
@@ -36,6 +47,17 @@ function App() {
       setSecondsLeft((current) => {
         if (current <= 1) {
           setRunning(false)
+          const session = {
+            id: Date.now(),
+            task: task.trim() || 'Untitled focus',
+            duration: minutes,
+            completedAt: new Date().toISOString(),
+          }
+          setSessions((currentSessions) => {
+            const nextSessions = [...currentSessions, session]
+            window.localStorage.setItem('focusforge-sessions', JSON.stringify(nextSessions))
+            return nextSessions
+          })
           return 0
         }
         return current - 1
@@ -43,10 +65,41 @@ function App() {
     }, 1000)
 
     return () => window.clearInterval(timer)
-  }, [running])
+  }, [running, task, minutes])
 
   const displayMinutes = String(Math.floor(secondsLeft / 60)).padStart(2, '0')
   const displaySeconds = String(secondsLeft % 60).padStart(2, '0')
+  const todaysSessions = sessions.filter(
+    (session) => new Date(session.completedAt).toDateString() === today,
+  )
+  const focusedToday = todaysSessions.reduce((total, session) => total + session.duration, 0)
+
+  const chooseDuration = (duration) => {
+    setMinutes(duration)
+    setSecondsLeft(duration * 60)
+    setRunning(false)
+    setCustomMinutes('')
+  }
+
+  const applyCustomDuration = () => {
+    const duration = Number(customMinutes)
+    if (!Number.isInteger(duration) || duration < 1 || duration > 180) return
+    chooseDuration(duration)
+  }
+
+  const resetTimer = () => {
+    setRunning(false)
+    setSecondsLeft(minutes * 60)
+  }
+
+  const toggleTimer = () => {
+    if (running) {
+      setRunning(false)
+      return
+    }
+    if (secondsLeft === 0) setSecondsLeft(minutes * 60)
+    setRunning(true)
+  }
 
   return (
     <main className="focusforge" ref={pageRef}>
@@ -55,7 +108,6 @@ function App() {
           <span className="brand-mark" aria-hidden="true"></span>
           <span>FocusForge</span>
         </a>
-        <button className="menu-button" type="button" aria-label="Open menu">Menu</button>
       </header>
 
       <section className="session-layout" aria-labelledby="session-title">
@@ -65,12 +117,22 @@ function App() {
           <p className="session-description">
             Choose one task, remove the noise, and stay with it until the timer ends.
           </p>
+          <label className="task-field">
+            <span>Current task</span>
+            <input
+              value={task}
+              onChange={(event) => setTask(event.target.value)}
+              placeholder="What are you working on?"
+              disabled={running}
+            />
+          </label>
         </div>
 
         <div className={`session-ring${running ? ' is-running' : ''}`}>
           <div className="session-ring-inner">
             <span className="session-time">{displayMinutes}:{displaySeconds}</span>
             <span className="session-state">{running ? 'In focus' : 'Ready'}</span>
+            <span className="session-task">{task.trim() || 'Choose a task'}</span>
           </div>
         </div>
       </section>
@@ -81,19 +143,46 @@ function App() {
             key={duration}
             className={minutes === duration ? 'is-selected' : ''}
             type="button"
-            onClick={() => {
-              setMinutes(duration)
-              setSecondsLeft(duration * 60)
-              setRunning(false)
-            }}
+            onClick={() => chooseDuration(duration)}
           >
             {duration} min
           </button>
         ))}
-        <button className="start-button" type="button" onClick={() => setRunning((value) => !value)}>
+        <div className="custom-duration">
+          <input
+            type="number"
+            min="1"
+            max="180"
+            value={customMinutes}
+            onChange={(event) => setCustomMinutes(event.target.value)}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter') applyCustomDuration()
+            }}
+            placeholder="Custom"
+            aria-label="Custom duration in minutes"
+          />
+          <button type="button" onClick={applyCustomDuration}>Set</button>
+        </div>
+        <button className="start-button" type="button" onClick={toggleTimer}>
           {running ? 'Pause' : 'Start focus'}
         </button>
+        <button className="reset-button" type="button" onClick={resetTimer}>Reset</button>
       </div>
+
+      <section className="focus-data" aria-label="Today's focus data">
+        <div>
+          <span className="data-label">Today</span>
+          <strong>{focusedToday} min</strong>
+        </div>
+        <div>
+          <span className="data-label">Sessions</span>
+          <strong>{todaysSessions.length}</strong>
+        </div>
+        <div className="latest-task">
+          <span className="data-label">Latest completed task</span>
+          <strong>{todaysSessions.at(-1)?.task || 'No completed sessions yet'}</strong>
+        </div>
+      </section>
     </main>
   )
 }
