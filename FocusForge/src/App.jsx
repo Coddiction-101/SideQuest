@@ -35,7 +35,7 @@ function App() {
         ease: 'power3.out',
         stagger: 0.08,
       })
-      gsap.from('.cutout-word span', {
+      gsap.from('.cutout-word > span:not(.cutout-line)', {
         opacity: 0,
         x: -5,
         y: gsap.utils.wrap([-6, 5]),
@@ -130,17 +130,18 @@ function App() {
       <section className="session-layout" aria-labelledby="session-title">
         <div className="session-copy">
           <p className="session-kicker">Deep work session</p>
-          <div className="headline-wrap">
-            <span className="cutout-word" aria-label="Excuses">
-              {'Excuses'.split('').map((letter, index) => (
-                <span key={`${letter}-${index}`} style={{ '--letter-index': index }}>{letter}</span>
+          <h1 id="session-title">Lock in and get things done, man. :)</h1>
+          <p className="session-description">
+            Pick the task. Kill the noise. Put in the work until it is done.{' '}
+            <span aria-hidden="true">— </span>
+            <span className="cutout-word" aria-label="No excuses">
+              {'no excuses'.split('').map((letter, index) => (
+                <span key={`${letter}-${index}`} style={{ '--letter-index': index }}>
+                  {letter === ' ' ? '\u00a0' : letter}
+                </span>
               ))}
               <span className="cutout-line" aria-hidden="true"></span>
             </span>
-            <h1 id="session-title">Lock in and get things done, man. :)</h1>
-          </div>
-          <p className="session-description">
-            Pick the task. Kill the noise. Put in the work until it is done.
           </p>
           <label className="task-field">
             <span>Current task</span>
