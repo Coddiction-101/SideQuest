@@ -119,11 +119,7 @@ function App() {
 
       <section className="session-layout" aria-labelledby="session-title">
         <div className="session-copy">
-          <p className="session-kicker">Deep work session</p>
           <h1 id="session-title">LOCK IN AND GET THINGS DONE, MAN. :)</h1>
-          <p className="session-description">
-            No Excuses
-          </p>
           <label className="task-field">
             <span>Current task</span>
             <input
