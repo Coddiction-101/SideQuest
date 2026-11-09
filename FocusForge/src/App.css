@@ -127,6 +127,7 @@
   height: 100%;
   display: grid;
   place-content: center;
+  gap: 8px;
   text-align: center;
   border-radius: 50%;
   background: transparent;
@@ -146,7 +147,7 @@
 }
 
 .session-state {
-  margin-top: 4px;
+  margin: 0;
   color: var(--muted);
   font-family: 'Poppins', sans-serif;
   font-size: 0.7rem;
@@ -156,7 +157,7 @@
 
 .session-task {
   max-width: 220px;
-  margin: 14px auto 0;
+  margin: 0 auto;
   overflow: hidden;
   color: var(--ink);
   font-size: 0.78rem;
@@ -316,13 +317,13 @@
   position: fixed;
   z-index: 4;
   bottom: max(20px, env(safe-area-inset-bottom));
-  left: 50%;
+  right: clamp(20px, 4vw, 56px);
+  left: auto;
   width: max-content;
   display: flex;
-  justify-content: center;
-  gap: 10px;
+  justify-content: flex-end;
+  gap: 12px;
   padding: 0;
-  transform: translateX(-50%);
   border: 0;
 }
 
@@ -359,7 +360,7 @@
 .focusforge.is-running .session-copy {
   position: fixed;
   z-index: 3;
-  bottom: 124px;
+  bottom: 108px;
   left: clamp(24px, 6vw, 72px);
   width: min(30vw, 360px);
 }
@@ -498,7 +499,7 @@
 
   .focusforge.is-running .session-copy {
     right: 20px;
-    bottom: 82px;
+    bottom: 100px;
     left: 20px;
     width: auto;
   }
@@ -518,8 +519,9 @@
   }
 
   .focusforge.is-running .session-controls {
+    right: max(16px, env(safe-area-inset-right));
     bottom: max(16px, env(safe-area-inset-bottom));
-    gap: 8px;
+    gap: 12px;
   }
 }
 
@@ -550,7 +552,7 @@
   }
 
   .focusforge.is-running .session-copy {
-    bottom: 88px;
+    bottom: 96px;
   }
 }
 
@@ -566,6 +568,7 @@
   }
 
   .focusforge.is-running .session-controls {
+    right: max(16px, env(safe-area-inset-right));
     bottom: 12px;
   }
 }
