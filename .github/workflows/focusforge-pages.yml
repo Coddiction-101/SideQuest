@@ -1,0 +1,101 @@
+name: Deploy FocusForge to GitHub Pages
+
+on:
+  push:
+    branches:
+      - Main
+    paths:
+      - 'FocusForge/**'
+      - '.github/workflows/focusforge-pages.yml'
+      - 'README.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: FocusForge/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: FocusForge
+
+      - name: Build FocusForge
+        run: npm run build
+        working-directory: FocusForge
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Assemble Pages site
+        run: |
+          mkdir -p _site
+          rsync -a \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='node_modules' \
+            --exclude='_site' \
+            --exclude='/FocusForge/dist/' \
+            ./ _site/
+          mkdir -p _site/FocusForge
+          cp -a FocusForge/dist/. _site/FocusForge/
+          cat > _site/index.html <<'EOF'
+          <!doctype html>
+          <html lang="en">
+            <head>
+              <meta charset="utf-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1">
+              <title>Workbench | SideQuest</title>
+            </head>
+            <body>
+              <main>
+                <h1>Workbench</h1>
+                <p>A collection of personal experiments and projects.</p>
+                <h2>Projects</h2>
+                <ul>
+                  <li><a href="./FocusForge/">FocusForge</a></li>
+                  <li><a href="./GitVerse/">GitVerse</a></li>
+                  <li><a href="./Doque/">Doque</a></li>
+                  <li><a href="https://github.com/Coddiction-101/Quantix">Quantix</a></li>
+                  <li><a href="./Stoic/">Stoic</a></li>
+                </ul>
+              </main>
+            </body>
+          </html>
+          EOF
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

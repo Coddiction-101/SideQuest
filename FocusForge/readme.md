@@ -4,7 +4,7 @@ A minimal deep-work timer designed to help you choose one task, reduce distracti
 
 ## Live project
 
-[View FocusForge](https://focusforge-deep-work.vercel.app/)
+[View FocusForge](https://coddiction-101.github.io/SideQuest/FocusForge/)
 
 ## Features
 

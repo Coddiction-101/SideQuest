@@ -129,8 +129,7 @@ function App() {
   return (
     <main className="focusforge" ref={pageRef}>
       <header className="topbar">
-        <a className="brand focusmark" href="/" aria-label="FocusForge home">
-          <i className="ri-focus-3-line brand-focus-icon" aria-hidden="true"></i>
+        <a className="brand focusmark" href={import.meta.env.BASE_URL} aria-label="FocusForge home">
           <span>FocusForge</span>
         </a>
       </header>
