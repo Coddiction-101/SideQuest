@@ -3,6 +3,15 @@
   --ink: #171717;
   --muted: #686868;
   --border: #d8d8d2;
+  --accent: #171717;
+  --focus-background: #0c1118;
+  --focus-ink: #f3f5f2;
+  --focus-muted: #a6b0bd;
+  --focus-border: rgb(212 226 240 / 16%);
+  color-scheme: light;
+  transition:
+    background-color 1.2s ease,
+    color 1.2s ease;
   font-family: 'Poppins', sans-serif;
   color: var(--ink);
   background: var(--background);
@@ -20,6 +29,17 @@ body {
   min-width: 320px;
   min-height: 100svh;
   margin: 0;
+  background: var(--background);
+  transition: background-color 1.2s ease;
+}
+
+:root[data-focus='true'] {
+  --background: var(--focus-background);
+  --ink: var(--focus-ink);
+  --muted: var(--focus-muted);
+  --border: var(--focus-border);
+  --accent: #a8f0db;
+  color-scheme: dark;
 }
 
 button,

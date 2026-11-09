@@ -1,7 +1,72 @@
 .focusforge {
+  position: relative;
+  isolation: isolate;
   min-height: 100svh;
   padding: 0 clamp(24px, 6vw, 72px) 48px;
   background: var(--background);
+  transition:
+    background-color 1.2s ease,
+    color 1.2s ease;
+}
+
+.focusforge::before,
+.focusforge::after {
+  position: fixed;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  width: min(94vw, 1040px);
+  aspect-ratio: 1;
+  border-radius: 48% 52% 62% 38% / 46% 41% 59% 54%;
+  content: '';
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0.82) rotate(-18deg);
+  transition:
+    opacity 1.4s ease,
+    filter 1.4s ease;
+}
+
+.focusforge::before {
+  background:
+    radial-gradient(ellipse at 38% 36%, rgb(111 224 196 / 38%), transparent 48%),
+    radial-gradient(ellipse at 68% 64%, rgb(116 143 242 / 30%), transparent 52%),
+    radial-gradient(ellipse at 48% 52%, rgb(49 136 151 / 32%), transparent 64%);
+  filter: blur(clamp(52px, 9vw, 112px));
+}
+
+.focusforge::after {
+  width: min(62vw, 700px);
+  border-radius: 63% 37% 45% 55% / 40% 61% 39% 60%;
+  background:
+    radial-gradient(ellipse at 42% 45%, rgb(175 241 220 / 22%), transparent 56%),
+    radial-gradient(ellipse at 65% 58%, rgb(153 134 237 / 18%), transparent 65%);
+  filter: blur(clamp(32px, 6vw, 76px));
+}
+
+.focusforge.is-running::before,
+.focusforge.is-running::after {
+  opacity: 1;
+  animation: focus-orbit 22s ease-in-out infinite alternate;
+}
+
+.focusforge.is-running::after {
+  animation-duration: 30s;
+  animation-direction: alternate-reverse;
+}
+
+@keyframes focus-orbit {
+  0% {
+    transform: translate(-53%, -48%) scale(0.9) rotate(-12deg);
+  }
+
+  50% {
+    transform: translate(-47%, -53%) scale(1.06, 0.94) rotate(8deg);
+  }
+
+  100% {
+    transform: translate(-51%, -46%) scale(0.97, 1.06) rotate(19deg);
+  }
 }
 
 .topbar {
@@ -110,9 +175,14 @@
 }
 
 .session-ring.is-running {
-  border-color: var(--ink);
-  box-shadow: inset 0 0 0 18px var(--background), inset 0 0 0 19px var(--ink);
+  border-color: transparent;
+  box-shadow: none;
   cursor: default;
+  background: transparent;
+  padding: 0;
+  transition:
+    background-color 1.2s ease,
+    border-color 1.2s ease;
 }
 
 .focusforge.is-running {
@@ -171,6 +241,46 @@
   text-align: center;
   border-radius: 50%;
   background: var(--background);
+  transition: background-color 1.2s ease;
+}
+
+.timer-progress {
+  position: absolute;
+  z-index: 3;
+  inset: -2px;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  overflow: visible;
+  transform: rotate(-90deg);
+  pointer-events: none;
+}
+
+.timer-progress-track,
+.timer-progress-glow,
+.timer-progress-smoke {
+  fill: none;
+  transform-origin: center;
+}
+
+.timer-progress-track {
+  stroke: rgb(224 236 248 / 12%);
+  stroke-width: 0.8;
+}
+
+.timer-progress-glow {
+  opacity: 0.7;
+  stroke-linecap: round;
+  stroke-width: 3.2;
+  filter: url(#smoke-glow);
+  transition: stroke-dashoffset 1s linear;
+}
+
+.timer-progress-smoke {
+  opacity: 0.94;
+  stroke-linecap: round;
+  stroke-width: 1.7;
+  filter: url(#smoke-distortion);
+  transition: stroke-dashoffset 1s linear;
 }
 
 .ring-duration {
@@ -273,6 +383,10 @@
   border: 1px solid var(--border);
   background: transparent;
   cursor: pointer;
+  transition:
+    background-color 0.6s ease,
+    border-color 0.6s ease,
+    color 0.6s ease;
 }
 
 .session-controls button.is-selected {
@@ -376,12 +490,20 @@
 .session-controls .start-button {
   margin-left: auto;
   color: var(--background);
-  border-color: var(--ink);
-  background: var(--ink);
+  border-color: var(--accent);
+  background: var(--accent);
 }
 
 .session-controls .reset-button {
   border-color: transparent;
+}
+
+.focusforge.is-running .session-controls .start-button {
+  color: #0c1118;
+}
+
+.focusforge.is-running .session-controls .reset-button {
+  color: var(--focus-ink);
 }
 
 .focus-data {
@@ -391,6 +513,9 @@
   margin-top: 32px;
   border: 1px solid var(--border);
   background: var(--border);
+  transition:
+    background-color 0.8s ease,
+    border-color 0.8s ease;
 }
 
 .focus-data > div {
@@ -400,6 +525,7 @@
   justify-content: space-between;
   padding: 18px;
   background: var(--background);
+  transition: background-color 0.8s ease;
 }
 
 .data-label {
@@ -451,8 +577,18 @@
   }
 
   .focusforge.is-running .session-ring {
-    top: 38%;
+    top: 50%;
     width: min(64vw, 280px);
+  }
+
+  .focusforge.is-running::before {
+    width: 130vw;
+    left: 54%;
+  }
+
+  .focusforge.is-running::after {
+    width: 90vw;
+    left: 38%;
   }
 
   .session-controls {
@@ -475,5 +611,27 @@
 
   .focus-data .latest-task {
     grid-column: 1 / -1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .focusforge,
+  .focusforge::before,
+  .focusforge::after,
+  .session-ring-inner,
+  .session-controls button,
+  .focus-data,
+  .focus-data > div,
+  .timer-progress-glow,
+  .timer-progress-smoke,
+  :root,
+  body {
+    animation: none;
+    scroll-behavior: auto;
+    transition-duration: 0.01ms;
+  }
+
+  .timer-progress-smoke {
+    filter: none;
   }
 }
