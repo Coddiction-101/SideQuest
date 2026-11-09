@@ -368,11 +368,38 @@
   border-color: var(--focus-border);
 }
 
+.progress-panel {
+  margin-top: 20px;
+  padding: 18px 20px;
+  border: 1px solid var(--border);
+  background: var(--background);
+}
+
+.progress-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.progress-heading h2 {
+  margin: 0;
+  color: var(--ink);
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.progress-heading > span {
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+
 .focus-data {
   display: grid;
   grid-template-columns: 140px 140px minmax(0, 1fr);
   gap: 1px;
-  margin-top: 8px;
   border: 1px solid var(--border);
   background: var(--border);
 }
@@ -649,14 +676,14 @@
 }
 
 .session-history {
-  padding: 24px 0 16px;
+  padding: 20px 0 0;
 }
 
-.session-history h2 {
-  margin: 0 0 12px;
+.session-history h3 {
+  margin: 0 0 10px;
   color: var(--ink);
   font-family: 'Poppins', sans-serif;
-  font-size: 0.9rem;
+  font-size: 0.78rem;
   font-weight: 600;
 }
 
@@ -667,6 +694,33 @@
   padding: 0;
   list-style: none;
   background: var(--border);
+}
+
+.session-history .session-history-list {
+  max-height: 210px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-color: var(--muted) var(--background);
+  scrollbar-width: thin;
+}
+
+.session-history-list:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.session-history-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.session-history-list::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+.session-history-list::-webkit-scrollbar-thumb {
+  border: 2px solid var(--background);
+  border-radius: 8px;
+  background: var(--muted);
 }
 
 .session-history li {
@@ -734,7 +788,7 @@
 .focusforge.is-running .keyboard-hint,
 .focusforge.is-running .status-message,
 .focusforge.is-running .settings-panel,
-.focusforge.is-running .session-history {
+.focusforge.is-running .progress-panel {
   display: none;
 }
 
@@ -767,6 +821,10 @@
 
   .focus-data {
     grid-template-columns: 1fr 1fr;
+  }
+
+  .progress-panel {
+    padding: 16px;
   }
 
   .focus-data > div:last-child {

@@ -446,7 +446,7 @@ function App() {
   const focusedToday = todaysSessions.reduce((total, session) => total + session.duration, 0)
   const weeklySessions = sessions.filter((session) => new Date(session.completedAt) >= calendar.weekStart)
   const weeklyMinutes = weeklySessions.reduce((total, session) => total + session.duration, 0)
-  const recentSessions = sessions.slice(0, 8)
+  const recentSessions = sessions
   const durationAngle = ((minutes - 1) / 179) * 360 - 90
   const handleX = 50 + Math.cos(durationAngle * Math.PI / 180) * 50
   const handleY = 50 + Math.sin(durationAngle * Math.PI / 180) * 50
@@ -575,62 +575,68 @@ function App() {
         </div>
       </section>
 
-      <section className="focus-data" aria-label="Focus summary">
-        <div>
-          <span className="data-label">Today</span>
-          <strong>{focusedToday} min</strong>
+      <section className="progress-panel" aria-labelledby="progress-title">
+        <div className="progress-heading">
+          <h2 id="progress-title">Progress</h2>
+          <span>Last 7 days</span>
         </div>
-        <div>
-          <span className="data-label">Sessions today</span>
-          <strong>{todaysSessions.length}</strong>
-        </div>
-        <div>
-          <span className="data-label">Last 7 days</span>
-          <strong>{weeklyMinutes} min · {weeklySessions.length} sessions</strong>
-        </div>
-      </section>
+        <section className="focus-data" aria-label="Focus summary">
+          <div>
+            <span className="data-label">Today</span>
+            <strong>{focusedToday} min</strong>
+          </div>
+          <div>
+            <span className="data-label">Sessions today</span>
+            <strong>{todaysSessions.length}</strong>
+          </div>
+          <div>
+            <span className="data-label">Last 7 days</span>
+            <strong>{weeklyMinutes} min · {weeklySessions.length} sessions</strong>
+          </div>
+        </section>
 
-      <section className="session-history" aria-labelledby="history-title">
-        <h2 id="history-title">Recent sessions</h2>
-        {recentSessions.length === 0 ? (
-          <p className="empty-history">Completed focus sessions will show up here.</p>
-        ) : (
-          <ul>
-            {recentSessions.map((session) => (
-              <li key={session.id} className={editingSessionId === session.id ? 'is-editing' : ''}>
-                {editingSessionId === session.id ? (
-                  <form className="history-edit-form" onSubmit={(event) => saveEditedTask(event, session.id)}>
-                    <input
-                      autoFocus
-                      value={editedTask}
-                      onChange={(event) => setEditedTask(event.target.value)}
-                      aria-label="Edit completed task"
-                      maxLength="120"
-                    />
-                    <button type="submit" className="history-action">Save</button>
-                    <button type="button" className="history-action" onClick={cancelEditingSession}>Cancel</button>
-                  </form>
-                ) : (
-                  <>
-                    <span className="history-task">{session.task}</span>
-                    <span className="history-duration">{session.duration} min</span>
-                    <time dateTime={session.completedAt}>
-                      {new Date(session.completedAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
-                    </time>
-                    <button
-                      type="button"
-                      className="history-action"
-                      onClick={() => beginEditingSession(session)}
-                      aria-label={`Edit task: ${session.task}`}
-                    >
-                      Edit
-                    </button>
-                  </>
-                )}
-              </li>
-            ))}
-          </ul>
-        )}
+        <section className="session-history" aria-labelledby="history-title">
+          <h3 id="history-title">Completed sessions</h3>
+          {recentSessions.length === 0 ? (
+            <p className="empty-history">Completed focus sessions will show up here.</p>
+          ) : (
+            <ul className="session-history-list" aria-label="Completed focus sessions" tabIndex="0">
+              {recentSessions.map((session) => (
+                <li key={session.id} className={editingSessionId === session.id ? 'is-editing' : ''}>
+                  {editingSessionId === session.id ? (
+                    <form className="history-edit-form" onSubmit={(event) => saveEditedTask(event, session.id)}>
+                      <input
+                        autoFocus
+                        value={editedTask}
+                        onChange={(event) => setEditedTask(event.target.value)}
+                        aria-label="Edit completed task"
+                        maxLength="120"
+                      />
+                      <button type="submit" className="history-action">Save</button>
+                      <button type="button" className="history-action" onClick={cancelEditingSession}>Cancel</button>
+                    </form>
+                  ) : (
+                    <>
+                      <span className="history-task">{session.task}</span>
+                      <span className="history-duration">{session.duration} min</span>
+                      <time dateTime={session.completedAt}>
+                        {new Date(session.completedAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
+                      </time>
+                      <button
+                        type="button"
+                        className="history-action"
+                        onClick={() => beginEditingSession(session)}
+                        aria-label={`Edit task: ${session.task}`}
+                      >
+                        Edit
+                      </button>
+                    </>
+                  )}
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
       </section>
     </main>
   )
