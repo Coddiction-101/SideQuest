@@ -129,7 +129,6 @@ function App() {
     handleRingDuration(event)
   }
 
-  const durationProgress = ((minutes - 1) / 179) * 100
   const durationAngle = ((minutes - 1) / 179) * 360 - 90
   const handleX = 50 + Math.cos(durationAngle * Math.PI / 180) * 50
   const handleY = 50 + Math.sin(durationAngle * Math.PI / 180) * 50
@@ -163,7 +162,6 @@ function App() {
         <div
           className={`session-ring${running ? ' is-running' : ''}`}
           style={{
-            '--duration-progress': `${durationProgress}%`,
             '--handle-x': `${handleX}%`,
             '--handle-y': `${handleY}%`,
           }}
@@ -176,65 +174,24 @@ function App() {
             <span className="session-time">{displayMinutes}:{displaySeconds}</span>
             <span className="session-state">{running ? 'In focus' : 'Ready'}</span>
             <span className="session-task">{task.trim() || 'Choose a task'}</span>
-          </div>
-        {running && (
-          <svg
-            className="timer-progress"
-            viewBox="0 0 100 100"
-            role="progressbar"
-            aria-label="Focus session progress"
-            aria-valuemin={0}
-            aria-valuemax={100}
-            aria-valuenow={Math.round(sessionProgress * 100)}
-            focusable="false"
-          >
-            <defs>
-              <linearGradient id="smoke-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#c5ffe6" />
-                <stop offset="50%" stopColor="#90ead7" />
-                <stop offset="100%" stopColor="#a8bdff" />
-              </linearGradient>
-              <filter id="smoke-distortion" x="-30%" y="-30%" width="160%" height="160%">
-                <feTurbulence
-                  type="fractalNoise"
-                  baseFrequency="0.022"
-                  numOctaves="2"
-                  seed="12"
-                >
-                  <animate
-                    attributeName="baseFrequency"
-                    values="0.018;0.034;0.018"
-                    dur="9s"
-                    repeatCount="indefinite"
+            {running && (
+              <div
+                className="timer-progress"
+                role="progressbar"
+                aria-label="Focus session progress"
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-valuenow={Math.round(sessionProgress * 100)}
+              >
+                {Array.from({ length: 24 }, (_, index) => (
+                  <span
+                    className={`timer-progress-dot${index < Math.round(sessionProgress * 24) ? ' is-complete' : ''}`}
+                    key={index}
                   />
-                </feTurbulence>
-                <feDisplacementMap in="SourceGraphic" scale="7" />
-              </filter>
-              <filter id="smoke-glow" x="-50%" y="-50%" width="200%" height="200%">
-                <feGaussianBlur stdDeviation="1.8" />
-              </filter>
-            </defs>
-            <circle className="timer-progress-track" cx="50" cy="50" r="47" />
-            <circle
-              className="timer-progress-glow"
-              cx="50"
-              cy="50"
-              r="47"
-              stroke="url(#smoke-gradient)"
-              strokeDasharray={2 * Math.PI * 47}
-              strokeDashoffset={2 * Math.PI * 47 * (1 - sessionProgress)}
-            />
-            <circle
-              className="timer-progress-smoke"
-              cx="50"
-              cy="50"
-              r="47"
-              stroke="url(#smoke-gradient)"
-              strokeDasharray={2 * Math.PI * 47}
-              strokeDashoffset={2 * Math.PI * 47 * (1 - sessionProgress)}
-            />
-          </svg>
-        )}
+                ))}
+              </div>
+            )}
+          </div>
         {!running && (
             <>
               <span className="ring-duration">{minutes}<small>MIN</small></span>

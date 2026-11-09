@@ -4,10 +4,10 @@
   --muted: #686868;
   --border: #d8d8d2;
   --accent: #171717;
-  --focus-background: #0c1118;
-  --focus-ink: #f3f5f2;
-  --focus-muted: #a6b0bd;
-  --focus-border: rgb(212 226 240 / 16%);
+  --focus-background: #191816;
+  --focus-ink: #f3efe6;
+  --focus-muted: #aaa59b;
+  --focus-border: rgb(243 239 230 / 16%);
   color-scheme: light;
   transition:
     background-color 1.2s ease,
@@ -38,7 +38,7 @@ body {
   --ink: var(--focus-ink);
   --muted: var(--focus-muted);
   --border: var(--focus-border);
-  --accent: #a8f0db;
+  --accent: #eee8dc;
   color-scheme: dark;
 }
 
