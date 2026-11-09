@@ -171,26 +171,16 @@ function App() {
           }}
         >
           <div className="session-ring-inner">
+            {sessionProgress > 0 && (
+              <span
+                className="timer-water"
+                style={{ '--water-level': `${sessionProgress * 100}%` }}
+                aria-hidden="true"
+              />
+            )}
             <span className="session-time">{displayMinutes}:{displaySeconds}</span>
             <span className="session-state">{running ? 'In focus' : 'Ready'}</span>
             <span className="session-task">{task.trim() || 'Choose a task'}</span>
-            {running && (
-              <div
-                className="timer-progress"
-                role="progressbar"
-                aria-label="Focus session progress"
-                aria-valuemin={0}
-                aria-valuemax={100}
-                aria-valuenow={Math.round(sessionProgress * 100)}
-              >
-                {Array.from({ length: 24 }, (_, index) => (
-                  <span
-                    className={`timer-progress-dot${index < Math.round(sessionProgress * 24) ? ' is-complete' : ''}`}
-                    key={index}
-                  />
-                ))}
-              </div>
-            )}
           </div>
         {!running && (
             <>

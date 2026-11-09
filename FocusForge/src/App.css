@@ -232,29 +232,48 @@
   place-content: center;
   text-align: center;
   border-radius: 50%;
+  overflow: hidden;
   background: var(--background);
   transition: background-color 1.2s ease;
 }
 
-.timer-progress {
-  display: flex;
-  justify-content: center;
-  gap: 5px;
-  margin: 18px auto 0;
+.timer-water {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: var(--water-level);
+  background: var(--water-fill);
+  transition: height 1s linear;
 }
 
-.timer-progress-dot {
-  width: 4px;
-  height: 4px;
-  flex: 0 0 4px;
-  border-radius: 50%;
-  background: var(--focus-ink);
-  opacity: 0.24;
-  transition: opacity 0.3s ease;
+.timer-water::before {
+  position: absolute;
+  top: -18px;
+  left: -12%;
+  width: 125%;
+  height: 36px;
+  border-radius: 45% 55% 40% 60% / 62% 38% 62% 38%;
+  background: inherit;
+  content: '';
+  animation: water-sway 7s ease-in-out infinite alternate;
 }
 
-.timer-progress-dot.is-complete {
-  opacity: 1;
+@keyframes water-sway {
+  from {
+    transform: translateX(-6%) rotate(-4deg);
+  }
+
+  to {
+    transform: translateX(6%) rotate(4deg);
+  }
+}
+
+.session-time,
+.session-state,
+.session-task {
+  position: relative;
+  z-index: 1;
 }
 
 .ring-duration {
@@ -600,7 +619,8 @@
   .session-controls button,
   .focus-data,
   .focus-data > div,
-  .timer-progress-dot,
+  .timer-water,
+  .timer-water::before,
   :root,
   body {
     animation: none;
