@@ -428,6 +428,20 @@ function App() {
   const focusedToday = todaysSessions.reduce((total, session) => total + session.duration, 0)
   const weeklySessions = sessions.filter((session) => new Date(session.completedAt) >= calendar.weekStart)
   const weeklyMinutes = weeklySessions.reduce((total, session) => total + session.duration, 0)
+  const weeklyActivity = Array.from({ length: 7 }, (_, index) => {
+    const date = new Date(calendar.weekStart)
+    date.setDate(date.getDate() + index)
+    const dateKey = date.toDateString()
+    const minutes = weeklySessions
+      .filter((session) => new Date(session.completedAt).toDateString() === dateKey)
+      .reduce((total, session) => total + session.duration, 0)
+    return {
+      dateKey,
+      label: date.toLocaleDateString(undefined, { weekday: 'short' }),
+      minutes,
+    }
+  })
+  const weeklyPeak = Math.max(...weeklyActivity.map((day) => day.minutes), 1)
   const recentSessions = sessions
   const durationAngle = ((minutes - 1) / 179) * 360 - 90
   const handleX = 50 + Math.cos(durationAngle * Math.PI / 180) * 50
@@ -570,9 +584,28 @@ function App() {
             <span className="data-label">Sessions today</span>
             <strong>{todaysSessions.length}</strong>
           </div>
-          <div>
-            <span className="data-label">Last 7 days</span>
-            <strong>{weeklyMinutes} min · {weeklySessions.length} sessions</strong>
+          <div className="weekly-summary">
+            <div className="weekly-summary-copy">
+              <span className="data-label">Last 7 days</span>
+              <strong>{weeklyMinutes} min · {weeklySessions.length} sessions</strong>
+            </div>
+            <div
+              className="weekly-chart"
+              role="img"
+              aria-label={`Focus minutes by day, last 7 days: ${weeklyActivity.map((day) => `${day.label} ${day.minutes} min`).join(', ')}`}
+            >
+              {weeklyActivity.map((day) => (
+                <span className="weekly-chart-day" key={day.dateKey} title={`${day.label}: ${day.minutes} minutes`}>
+                  <span className="weekly-chart-bar">
+                    <span
+                      className="weekly-chart-fill"
+                      style={{ height: `${Math.max((day.minutes / weeklyPeak) * 100, 4)}%` }}
+                    />
+                  </span>
+                  <span className="weekly-chart-label">{day.label.slice(0, 1)}</span>
+                </span>
+              ))}
+            </div>
           </div>
         </section>
 

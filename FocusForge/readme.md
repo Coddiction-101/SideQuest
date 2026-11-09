@@ -16,6 +16,7 @@ A minimal deep-work timer designed to help you choose one task, reduce distracti
 - Timer state and completed sessions saved locally, including active sessions across refreshes
 - Optional focus-to-break cycles with a configurable break duration
 - Recent session history, editable completed task names, and daily/weekly focus summaries
+- Seven-day focus activity chart showing daily minutes at a glance
 - Completed sessions are automatically removed after seven days
 - Progress summaries stay visible while the completed-session list scrolls in its own monochrome panel
 - Monochrome settings panel for break and notification preferences

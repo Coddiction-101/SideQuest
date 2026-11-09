@@ -662,6 +662,73 @@
   font-size: 0.9rem;
 }
 
+.focus-data > .weekly-summary {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.8fr) minmax(0, 1fr);
+  align-items: stretch;
+  gap: clamp(16px, 3vw, 40px);
+}
+
+.weekly-summary-copy {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.weekly-chart {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  align-items: end;
+  gap: clamp(5px, 1vw, 12px);
+}
+
+.weekly-chart-day {
+  min-width: 0;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  justify-items: center;
+  gap: 6px;
+}
+
+.weekly-chart-bar {
+  width: 100%;
+  min-height: 36px;
+  display: flex;
+  align-items: flex-end;
+  border-bottom: 1px solid var(--border);
+}
+
+.weekly-chart-fill {
+  width: 100%;
+  min-height: 2px;
+  background: var(--ink);
+  transition: height 200ms ease;
+}
+
+.weekly-chart-label {
+  color: var(--muted);
+  font-size: 0.62rem;
+  line-height: 1;
+}
+
+@media (max-width: 760px) {
+  .focus-data > .weekly-summary {
+    grid-column: 1 / -1;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .weekly-summary-copy {
+    align-items: baseline;
+    flex-direction: row;
+    gap: 8px;
+  }
+}
+
 .session-history {
   padding: 20px 0 0;
 }
@@ -806,6 +873,11 @@
 
   .focus-data > div:last-child {
     grid-column: 1 / -1;
+  }
+
+  .focus-data > .weekly-summary {
+    gap: 8px;
+    padding: 10px;
   }
 
   .focus-options {
