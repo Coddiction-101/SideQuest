@@ -115,6 +115,52 @@
   cursor: default;
 }
 
+.focusforge.is-running {
+  min-height: 100svh;
+  padding-bottom: 0;
+  overflow: hidden;
+}
+
+.focusforge.is-running .session-layout {
+  min-height: 0;
+}
+
+.focusforge.is-running .session-copy {
+  position: fixed;
+  z-index: 3;
+  left: clamp(24px, 6vw, 72px);
+  bottom: clamp(84px, 11vh, 112px);
+  width: min(32vw, 420px);
+}
+
+.focusforge.is-running .session-kicker {
+  margin-bottom: 8px;
+  font-size: 0.62rem;
+}
+
+.focusforge.is-running .session-copy h1 {
+  font-size: clamp(1.35rem, 2.5vw, 2.25rem);
+  line-height: 1;
+}
+
+.focusforge.is-running .session-description {
+  margin-top: 10px;
+  font-size: 0.88rem;
+}
+
+.focusforge.is-running .task-field {
+  display: none;
+}
+
+.focusforge.is-running .session-ring {
+  position: fixed;
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  width: clamp(280px, 30vw, 370px);
+  transform: translate(-50%, -50%);
+}
+
 .session-ring-inner {
   position: relative;
   z-index: 2;
@@ -197,6 +243,27 @@
   gap: 8px;
   min-height: 168px;
   border-top: 1px solid var(--border);
+}
+
+.focusforge.is-running .session-controls {
+  position: fixed;
+  z-index: 4;
+  bottom: 24px;
+  left: 50%;
+  min-height: 0;
+  transform: translateX(-50%);
+  justify-content: center;
+  border-top: 0;
+}
+
+.focusforge.is-running .duration-slider,
+.focusforge.is-running .custom-duration,
+.focusforge.is-running .focus-data {
+  display: none;
+}
+
+.focusforge.is-running .session-controls .start-button {
+  margin-left: 0;
 }
 
 .session-controls button {
@@ -368,9 +435,34 @@
     font-size: clamp(2rem, 9vw, 3.25rem);
   }
 
+  .focusforge.is-running .session-copy {
+    right: 24px;
+    bottom: 88px;
+    width: auto;
+  }
+
+  .focusforge.is-running .session-copy h1 {
+    max-width: 440px;
+    font-size: clamp(1.2rem, 5vw, 1.75rem);
+  }
+
+  .focusforge.is-running .session-description {
+    margin-top: 6px;
+  }
+
+  .focusforge.is-running .session-ring {
+    top: 38%;
+    width: min(64vw, 280px);
+  }
+
   .session-controls {
     flex-wrap: wrap;
     padding-top: 14px;
+  }
+
+  .focusforge.is-running .session-controls {
+    flex-wrap: nowrap;
+    padding-top: 0;
   }
 
   .session-controls .start-button {

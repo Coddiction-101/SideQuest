@@ -29,7 +29,6 @@ function App() {
       })
       gsap.from('.session-ring, .session-copy', {
         opacity: 0,
-        scale: 0.96,
         duration: 0.8,
         delay: 0.15,
         ease: 'power3.out',
@@ -127,7 +126,7 @@ function App() {
   const handleY = 50 + Math.sin(durationAngle * Math.PI / 180) * 50
 
   return (
-    <main className="focusforge" ref={pageRef}>
+    <main className={`focusforge${running ? ' is-running' : ''}`} ref={pageRef}>
       <header className="topbar">
         <a className="brand focusmark" href={import.meta.env.BASE_URL} aria-label="FocusForge home">
           <span>FocusForge</span>
