@@ -1,81 +1,19 @@
 .focusforge {
-  position: relative;
-  isolation: isolate;
+  width: min(100%, 1280px);
   min-height: 100svh;
-  padding: 0 clamp(24px, 6vw, 72px) 48px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 4vw, 56px) 32px;
   background: var(--background);
-  transition:
-    background-color 1.2s ease,
-    color 1.2s ease;
-}
-
-.focusforge::before,
-.focusforge::after {
-  position: fixed;
-  z-index: -1;
-  top: 50%;
-  left: 50%;
-  width: min(94vw, 1040px);
-  aspect-ratio: 1;
-  border-radius: 48% 52% 62% 38% / 46% 41% 59% 54%;
-  content: '';
-  opacity: 0;
-  pointer-events: none;
-  transform: translate(-50%, -50%) scale(0.82) rotate(-18deg);
-  transition:
-    opacity 1.4s ease,
-    filter 1.4s ease;
-}
-
-.focusforge::before {
-  background: #e7dfd1;
-  filter: blur(clamp(52px, 9vw, 112px));
-}
-
-.focusforge::after {
-  inset: 0;
-  width: auto;
-  border-radius: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.36'/%3E%3C/svg%3E");
-  background-size: 180px 180px;
-  filter: none;
-  mix-blend-mode: soft-light;
-}
-
-.focusforge.is-running::before {
-  opacity: 0.08;
-  animation: focus-orbit 22s ease-in-out infinite alternate;
-}
-
-.focusforge.is-running::after {
-  opacity: 0.18;
-}
-
-@keyframes focus-orbit {
-  0% {
-    transform: translate(-53%, -48%) scale(0.9) rotate(-12deg);
-  }
-
-  50% {
-    transform: translate(-47%, -53%) scale(1.06, 0.94) rotate(8deg);
-  }
-
-  100% {
-    transform: translate(-51%, -46%) scale(0.97, 1.06) rotate(19deg);
-  }
 }
 
 .topbar {
-  height: 88px;
+  height: 72px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   border-bottom: 1px solid var(--border);
 }
 
 .brand {
-  display: inline-flex;
-  align-items: center;
   color: var(--ink);
   font-family: 'Poppins', sans-serif;
   font-weight: 700;
@@ -83,11 +21,11 @@
 }
 
 .session-layout {
-  min-height: 520px;
+  min-height: min(58vh, 500px);
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 360px);
   align-items: center;
-  gap: clamp(32px, 8vw, 96px);
+  gap: clamp(24px, 6vw, 72px);
 }
 
 .session-kicker {
@@ -113,7 +51,7 @@
 
 .session-description {
   max-width: 430px;
-  margin-top: 28px;
+  margin-top: 20px;
   color: var(--muted);
   line-height: 1.7;
 }
@@ -125,18 +63,20 @@
   margin-top: 24px;
 }
 
-.task-field span {
+.task-field span,
+.slider-heading,
+.data-label {
   color: var(--muted);
   font-family: 'Poppins', sans-serif;
   font-size: 0.68rem;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 .task-field input {
   width: 100%;
   height: 44px;
-  padding: 0 0;
+  padding: 0;
   color: var(--ink);
   border: 0;
   border-bottom: 1px solid var(--border);
@@ -152,121 +92,44 @@
 
 .session-ring {
   position: relative;
-  width: min(34vw, 390px);
+  width: min(100%, 340px);
   aspect-ratio: 1;
   display: grid;
   place-items: center;
+  justify-self: center;
+  padding: 14px;
   border: 1px solid var(--border);
   border-radius: 50%;
   box-shadow: inset 0 0 0 18px var(--background), inset 0 0 0 19px var(--border);
-  cursor: ew-resize;
-  touch-action: none;
   background: var(--border);
+  cursor: ew-resize;
   isolation: isolate;
-  padding: 19px;
+  touch-action: none;
 }
 
 .session-ring.is-running {
-  border-color: transparent;
-  box-shadow: none;
-  cursor: default;
-  background: transparent;
-  padding: 0;
-  transition:
-    background-color 1.2s ease,
-    border-color 1.2s ease;
-}
-
-.focusforge.is-running {
-  min-height: 100svh;
-  padding-bottom: 0;
-  overflow: hidden;
-}
-
-.focusforge.is-running .session-layout {
-  min-height: 0;
-}
-
-.focusforge.is-running .session-copy {
-  position: fixed;
-  z-index: 3;
-  left: clamp(24px, 6vw, 72px);
-  bottom: clamp(84px, 11vh, 112px);
-  width: min(32vw, 420px);
-}
-
-.focusforge.is-running .session-kicker {
-  margin-bottom: 8px;
-  font-size: 0.62rem;
-}
-
-.focusforge.is-running .session-copy h1 {
-  font-size: clamp(1.35rem, 2.5vw, 2.25rem);
-  line-height: 1;
-}
-
-.focusforge.is-running .session-description {
-  margin-top: 10px;
-  font-size: 0.88rem;
-}
-
-.focusforge.is-running .task-field {
-  display: none;
-}
-
-.focusforge.is-running .session-ring {
   position: fixed;
   z-index: 2;
-  top: 50%;
+  top: 46%;
   left: 50%;
-  width: clamp(280px, 30vw, 370px);
+  width: clamp(260px, 28vw, 340px);
+  height: auto;
+  padding: 0;
   transform: translate(-50%, -50%);
+  border-color: var(--border);
+  box-shadow: none;
+  background: var(--background);
+  cursor: default;
 }
 
 .session-ring-inner {
-  position: relative;
-  z-index: 2;
   width: 100%;
   height: 100%;
   display: grid;
   place-content: center;
   text-align: center;
   border-radius: 50%;
-  overflow: hidden;
-  background: var(--background);
-  transition: background-color 1.2s ease;
-}
-
-.timer-water {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  height: var(--water-level);
-  background: var(--water-fill);
-  transition: height 1s linear;
-}
-
-.timer-water::before {
-  position: absolute;
-  top: -18px;
-  left: -12%;
-  width: 125%;
-  height: 36px;
-  border-radius: 45% 55% 40% 60% / 62% 38% 62% 38%;
-  background: inherit;
-  content: '';
-  animation: water-sway 7s ease-in-out infinite alternate;
-}
-
-@keyframes water-sway {
-  from {
-    transform: translateX(-6%) rotate(-4deg);
-  }
-
-  to {
-    transform: translateX(6%) rotate(4deg);
-  }
+  background: transparent;
 }
 
 .session-time,
@@ -274,45 +137,6 @@
 .session-task {
   position: relative;
   z-index: 1;
-}
-
-.ring-duration {
-  position: absolute;
-  z-index: 4;
-  top: 0;
-  right: -14px;
-  min-width: 58px;
-  transform: translateY(-50%);
-  display: grid;
-  place-items: center;
-  color: var(--ink);
-  font-family: 'Lora', serif;
-  font-size: 1rem;
-  line-height: 1;
-  background: var(--background);
-}
-
-.ring-duration small {
-  margin-top: 4px;
-  color: var(--muted);
-  font-family: 'Poppins', sans-serif;
-  font-size: 0.52rem;
-  letter-spacing: 0.08em;
-}
-
-.ring-duration-handle {
-  position: absolute;
-  z-index: 5;
-  left: var(--handle-x);
-  top: var(--handle-y);
-  width: 17px;
-  height: 17px;
-  transform: translate(-50%, -50%);
-  border: 4px solid var(--background);
-  border-radius: 50%;
-  background: var(--ink);
-  box-shadow: 0 0 0 1px var(--ink);
-  pointer-events: none;
 }
 
 .session-time {
@@ -340,56 +164,56 @@
   white-space: nowrap;
 }
 
+.ring-duration {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  right: -14px;
+  min-width: 58px;
+  transform: translateY(-50%);
+  display: grid;
+  place-items: center;
+  color: var(--ink);
+  background: var(--background);
+  font-family: 'Lora', serif;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.ring-duration small {
+  margin-top: 4px;
+  color: var(--muted);
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.52rem;
+  letter-spacing: 0.08em;
+}
+
+.ring-duration-handle {
+  position: absolute;
+  z-index: 3;
+  left: var(--handle-x);
+  top: var(--handle-y);
+  width: 17px;
+  height: 17px;
+  transform: translate(-50%, -50%);
+  border: 4px solid var(--background);
+  border-radius: 50%;
+  background: var(--ink);
+  box-shadow: 0 0 0 1px var(--ink);
+  pointer-events: none;
+}
+
 .session-controls {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 168px;
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) auto auto auto;
+  align-items: end;
+  gap: 16px;
+  padding: 20px 0;
   border-top: 1px solid var(--border);
 }
 
-.focusforge.is-running .session-controls {
-  position: fixed;
-  z-index: 4;
-  bottom: 24px;
-  left: 50%;
-  min-height: 0;
-  transform: translateX(-50%);
-  justify-content: center;
-  border-top: 0;
-}
-
-.focusforge.is-running .duration-slider,
-.focusforge.is-running .custom-duration,
-.focusforge.is-running .focus-data {
-  display: none;
-}
-
-.focusforge.is-running .session-controls .start-button {
-  margin-left: 0;
-}
-
-.session-controls button {
-  min-height: 38px;
-  padding: 0 12px;
-  color: var(--muted);
-  border: 1px solid var(--border);
-  background: transparent;
-  cursor: pointer;
-  transition:
-    background-color 0.6s ease,
-    border-color 0.6s ease,
-    color 0.6s ease;
-}
-
-.session-controls button.is-selected {
-  color: var(--background);
-  border-color: var(--ink);
-  background: var(--ink);
-}
-
 .duration-slider {
-  width: min(42vw, 460px);
+  width: 100%;
   display: grid;
   gap: 10px;
 }
@@ -398,10 +222,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: var(--muted);
-  font-size: 0.68rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
 .slider-heading strong {
@@ -421,7 +241,8 @@
   cursor: ew-resize;
 }
 
-.duration-slider input[type='range']::-webkit-slider-runnable-track {
+.duration-slider input[type='range']::-webkit-slider-runnable-track,
+.duration-slider input[type='range']::-moz-range-track {
   height: 2px;
   background: var(--border);
 }
@@ -435,11 +256,6 @@
   border-radius: 50%;
   background: var(--ink);
   box-shadow: 0 0 0 1px var(--ink);
-}
-
-.duration-slider input[type='range']::-moz-range-track {
-  height: 2px;
-  background: var(--border);
 }
 
 .duration-slider input[type='range']::-moz-range-thumb {
@@ -457,13 +273,13 @@
 }
 
 .custom-duration {
+  height: 42px;
   display: flex;
-  height: 38px;
 }
 
 .custom-duration input {
   width: 82px;
-  height: 38px;
+  height: 100%;
   padding: 0 10px;
   color: var(--ink);
   border: 1px solid var(--border);
@@ -476,27 +292,99 @@
   border-color: var(--ink);
 }
 
+.session-controls button {
+  min-height: 42px;
+  padding: 0 16px;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  background: transparent;
+  cursor: pointer;
+}
+
 .custom-duration button {
-  min-height: 38px;
+  min-height: 0;
 }
 
 .session-controls .start-button {
-  margin-left: auto;
+  margin-left: 0;
   color: var(--background);
   border-color: var(--accent);
   background: var(--accent);
 }
 
-.session-controls .reset-button {
-  border-color: transparent;
+.focusforge.is-running .session-controls {
+  position: fixed;
+  z-index: 4;
+  bottom: max(20px, env(safe-area-inset-bottom));
+  left: 50%;
+  width: max-content;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 0;
+  transform: translateX(-50%);
+  border: 0;
+}
+
+.focusforge.is-running .duration-slider,
+.focusforge.is-running .custom-duration,
+.focusforge.is-running .focus-data {
+  display: none;
 }
 
 .focusforge.is-running .session-controls .start-button {
+  margin-left: 0;
   color: #191816;
+  border-color: var(--accent);
+  background: var(--accent);
 }
 
 .focusforge.is-running .session-controls .reset-button {
   color: var(--focus-ink);
+  border-color: var(--focus-border);
+}
+
+.focusforge.is-running {
+  width: 100%;
+  height: 100svh;
+  min-height: 0;
+  padding-bottom: 24px;
+  overflow: hidden;
+}
+
+.focusforge.is-running .session-layout {
+  min-height: 0;
+}
+
+.focusforge.is-running .session-copy {
+  position: fixed;
+  z-index: 3;
+  bottom: 124px;
+  left: clamp(24px, 6vw, 72px);
+  width: min(30vw, 360px);
+}
+
+.focusforge.is-running .session-kicker {
+  margin-bottom: 8px;
+  font-size: 0.62rem;
+}
+
+.focusforge.is-running .session-copy h1 {
+  font-size: clamp(1.25rem, 2vw, 1.8rem);
+  line-height: 1.05;
+}
+
+.focusforge.is-running .session-description {
+  margin-top: 10px;
+  font-size: 0.88rem;
+}
+
+.focusforge.is-running .task-field {
+  display: none;
+}
+
+.focusforge.is-running .session-ring {
+  top: 46%;
 }
 
 .focusforge.is-running .session-controls button {
@@ -507,12 +395,9 @@
   display: grid;
   grid-template-columns: 140px 140px minmax(0, 1fr);
   gap: 1px;
-  margin-top: 32px;
+  margin-top: 8px;
   border: 1px solid var(--border);
   background: var(--border);
-  transition:
-    background-color 0.8s ease,
-    border-color 0.8s ease;
 }
 
 .focus-data > div {
@@ -522,15 +407,10 @@
   justify-content: space-between;
   padding: 18px;
   background: var(--background);
-  transition: background-color 0.8s ease;
 }
 
 .data-label {
-  color: var(--muted);
-  font-family: 'Poppins', sans-serif;
   font-size: 0.66rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
 .focus-data strong {
@@ -543,89 +423,158 @@
 }
 
 @media (max-width: 760px) {
-  .session-layout {
-    min-height: 620px;
-    grid-template-columns: 1fr;
-    align-content: center;
+  .focusforge {
+    padding: 0 20px 24px;
   }
 
-  .session-ring {
-    width: min(72vw, 330px);
-    justify-self: center;
+  .topbar {
+    height: 64px;
+  }
+
+  .session-layout {
+    min-height: 0;
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding: 40px 0 32px;
   }
 
   .session-copy h1 {
+    max-width: 560px;
     font-size: clamp(2rem, 9vw, 3.25rem);
   }
 
-  .focusforge.is-running .session-copy {
-    right: 24px;
-    bottom: 88px;
-    width: auto;
+  .session-description {
+    margin-top: 14px;
   }
 
-  .focusforge.is-running .session-copy h1 {
-    max-width: 440px;
-    font-size: clamp(1.2rem, 5vw, 1.75rem);
-  }
-
-  .focusforge.is-running .session-description {
-    margin-top: 6px;
-  }
-
-  .focusforge.is-running .session-ring {
-    top: 50%;
-    width: min(64vw, 280px);
-  }
-
-  .focusforge.is-running::before {
-    width: 130vw;
-    left: 54%;
-  }
-
-  .focusforge.is-running::after {
-    width: auto;
-    left: 0;
+  .session-ring {
+    width: min(72vw, 300px);
   }
 
   .session-controls {
-    flex-wrap: wrap;
-    padding-top: 14px;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 12px;
+    padding: 18px 0;
   }
 
-  .focusforge.is-running .session-controls {
-    flex-wrap: nowrap;
-    padding-top: 0;
+  .duration-slider {
+    grid-column: 1 / -1;
+  }
+
+  .custom-duration {
+    grid-column: 1;
   }
 
   .session-controls .start-button {
-    margin-left: 0;
+    grid-column: 2;
+  }
+
+  .session-controls .reset-button {
+    grid-column: 1 / -1;
+    justify-self: start;
   }
 
   .focus-data {
     grid-template-columns: 1fr 1fr;
   }
 
+  .focus-data > div {
+    min-height: 76px;
+    padding: 14px;
+  }
+
   .focus-data .latest-task {
     grid-column: 1 / -1;
+  }
+
+  .focusforge.is-running {
+    padding: 0 20px max(16px, env(safe-area-inset-bottom));
+  }
+
+  .focusforge.is-running .session-ring {
+    top: 40%;
+    width: clamp(220px, 64vw, 280px);
+  }
+
+  .focusforge.is-running .session-copy {
+    right: 20px;
+    bottom: 82px;
+    left: 20px;
+    width: auto;
+  }
+
+  .focusforge.is-running .session-kicker {
+    margin-bottom: 6px;
+  }
+
+  .focusforge.is-running .session-copy h1 {
+    max-width: 520px;
+    font-size: clamp(1.1rem, 5vw, 1.5rem);
+  }
+
+  .focusforge.is-running .session-description {
+    margin-top: 6px;
+    font-size: 0.82rem;
+  }
+
+  .focusforge.is-running .session-controls {
+    bottom: max(16px, env(safe-area-inset-bottom));
+    gap: 8px;
+  }
+}
+
+@media (max-width: 380px) {
+  .focusforge {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .focusforge.is-running .session-copy {
+    right: 16px;
+    left: 16px;
+  }
+
+  .focusforge.is-running .session-ring {
+    width: 220px;
+  }
+
+  .session-controls {
+    gap: 8px;
+  }
+}
+
+@media (max-height: 680px) and (max-width: 760px) {
+  .focusforge.is-running .session-ring {
+    top: 36%;
+    width: 210px;
+  }
+
+  .focusforge.is-running .session-copy {
+    bottom: 88px;
+  }
+}
+
+@media (max-height: 680px) and (min-width: 761px) {
+  .focusforge.is-running .session-ring {
+    top: 38%;
+    width: 210px;
+  }
+
+  .focusforge.is-running .session-copy {
+    bottom: 108px;
+    width: min(30vw, 320px);
+  }
+
+  .focusforge.is-running .session-controls {
+    bottom: 12px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .focusforge,
-  .focusforge::before,
-  .focusforge::after,
-  .session-ring-inner,
-  .session-controls button,
-  .focus-data,
-  .focus-data > div,
-  .timer-water,
-  .timer-water::before,
-  :root,
-  body {
-    animation: none;
-    scroll-behavior: auto;
-    transition-duration: 0.01ms;
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
   }
-
 }

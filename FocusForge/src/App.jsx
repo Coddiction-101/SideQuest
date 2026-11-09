@@ -1,9 +1,7 @@
-import { useEffect, useRef, useState } from 'react'
-import gsap from 'gsap'
+import { useEffect, useState } from 'react'
 import './App.css'
 
 function App() {
-  const pageRef = useRef(null)
   const [running, setRunning] = useState(false)
   const [minutes, setMinutes] = useState(25)
   const [secondsLeft, setSecondsLeft] = useState(25 * 60)
@@ -25,26 +23,6 @@ function App() {
       delete document.documentElement.dataset.focus
     }
   }, [running])
-
-  useEffect(() => {
-    const context = gsap.context(() => {
-      gsap.from('.focusmark', {
-        opacity: 0,
-        y: 16,
-        duration: 0.6,
-        ease: 'power3.out',
-      })
-      gsap.from('.session-ring, .session-copy', {
-        opacity: 0,
-        duration: 0.8,
-        delay: 0.15,
-        ease: 'power3.out',
-        stagger: 0.08,
-      })
-    }, pageRef)
-
-    return () => context.revert()
-  }, [])
 
   useEffect(() => {
     if (!running) return
@@ -79,8 +57,6 @@ function App() {
     (session) => new Date(session.completedAt).toDateString() === today,
   )
   const focusedToday = todaysSessions.reduce((total, session) => total + session.duration, 0)
-
-  const sessionProgress = Math.min(1, Math.max(0, 1 - secondsLeft / (minutes * 60)))
 
   const chooseDuration = (duration) => {
     setMinutes(duration)
@@ -134,7 +110,7 @@ function App() {
   const handleY = 50 + Math.sin(durationAngle * Math.PI / 180) * 50
 
   return (
-    <main className={`focusforge${running ? ' is-running' : ''}`} ref={pageRef}>
+    <main className={`focusforge${running ? ' is-running' : ''}`}>
       <header className="topbar">
         <a className="brand focusmark" href={import.meta.env.BASE_URL} aria-label="FocusForge home">
           <span>FocusForge</span>
@@ -171,13 +147,6 @@ function App() {
           }}
         >
           <div className="session-ring-inner">
-            {sessionProgress > 0 && (
-              <span
-                className="timer-water"
-                style={{ '--water-level': `${sessionProgress * 100}%` }}
-                aria-hidden="true"
-              />
-            )}
             <span className="session-time">{displayMinutes}:{displaySeconds}</span>
             <span className="session-state">{running ? 'In focus' : 'Ready'}</span>
             <span className="session-task">{task.trim() || 'Choose a task'}</span>

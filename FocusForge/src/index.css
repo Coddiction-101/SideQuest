@@ -4,7 +4,6 @@
   --muted: #686868;
   --border: #d8d8d2;
   --accent: #171717;
-  --water-fill: rgb(23 23 23 / 14%);
   --focus-background: #191816;
   --focus-ink: #f3efe6;
   --focus-muted: #aaa59b;
@@ -40,7 +39,6 @@ body {
   --muted: var(--focus-muted);
   --border: var(--focus-border);
   --accent: #eee8dc;
-  --water-fill: rgb(243 239 230 / 18%);
   color-scheme: dark;
 }
 
