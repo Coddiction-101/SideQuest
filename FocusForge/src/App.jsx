@@ -3,11 +3,21 @@ import './App.css'
 
 const TIMER_STORAGE_KEY = 'focusforge-state'
 const SESSIONS_STORAGE_KEY = 'focusforge-sessions'
+const SESSION_RETENTION_MS = 7 * 24 * 60 * 60 * 1000
+
+function pruneExpiredSessions(sessions, now = Date.now()) {
+  const cutoff = now - SESSION_RETENTION_MS
+  return sessions.filter((session) => {
+    if (!session || typeof session.completedAt !== 'string') return false
+    const completedAt = Date.parse(session.completedAt)
+    return Number.isFinite(completedAt) && completedAt >= cutoff
+  })
+}
 
 function readSessions() {
   try {
     const saved = JSON.parse(window.localStorage.getItem(SESSIONS_STORAGE_KEY) || '[]')
-    return Array.isArray(saved) ? saved : []
+    return Array.isArray(saved) ? pruneExpiredSessions(saved) : []
   } catch (error) {
     console.error('Unable to read FocusForge session history.', error)
     return []
@@ -73,6 +83,8 @@ function App() {
   const [timer, setTimer] = useState(readTimerState)
   const [sessions, setSessions] = useState(readSessions)
   const [customMinutes, setCustomMinutes] = useState('')
+  const [editingSessionId, setEditingSessionId] = useState(null)
+  const [editedTask, setEditedTask] = useState('')
   const audioContextRef = useRef(null)
   const completionHandledRef = useRef(false)
   const storageFailedRef = useRef(false)
@@ -123,6 +135,10 @@ function App() {
       const weekStart = new Date(now)
       weekStart.setHours(0, 0, 0, 0)
       weekStart.setDate(weekStart.getDate() - 6)
+      setSessions((current) => {
+        const retained = pruneExpiredSessions(current)
+        return retained.length === current.length ? current : retained
+      })
       setCalendar((current) => current.today === now.toDateString()
         ? current
         : { today: now.toDateString(), weekStart })
@@ -396,6 +412,32 @@ function App() {
     }
   }
 
+  const beginEditingSession = (session) => {
+    setEditingSessionId(session.id)
+    setEditedTask(session.task)
+    setTimer((current) => ({ ...current, statusMessage: '' }))
+  }
+
+  const cancelEditingSession = () => {
+    setEditingSessionId(null)
+    setEditedTask('')
+  }
+
+  const saveEditedTask = (event, sessionId) => {
+    event.preventDefault()
+    const nextTask = editedTask.trim()
+    if (!nextTask) {
+      setTimer((current) => ({ ...current, statusMessage: 'A completed task name cannot be empty.' }))
+      return
+    }
+
+    setSessions((current) => current.map((session) => (
+      session.id === sessionId ? { ...session, task: nextTask } : session
+    )))
+    cancelEditingSession()
+    setTimer((current) => ({ ...current, statusMessage: 'Completed task updated.' }))
+  }
+
   const displayMinutes = String(Math.floor(secondsLeft / 60)).padStart(2, '0')
   const displaySeconds = String(secondsLeft % 60).padStart(2, '0')
   const todaysSessions = sessions.filter(
@@ -493,36 +535,44 @@ function App() {
 
       <p className="status-message" role="status">{statusMessage}</p>
 
-      <section className="focus-options" aria-label="Timer options">
-        <label className="option-toggle">
-          <input type="checkbox" checked={cycleEnabled} onChange={toggleCycle} disabled={running} />
-          <span>Auto break after focus</span>
-        </label>
-        <label className="break-length">
-          <span>Break length</span>
-          <input
-            type="number"
-            min="1"
-            max="60"
-            value={breakMinutes}
-            onChange={updateBreakMinutes}
-            disabled={!cycleEnabled || running || phase === 'break'}
-            aria-label="Break length in minutes"
-          />
-          <span>min</span>
-        </label>
-        <span className="cycle-count">{timer.completedFocuses} focus sessions completed</span>
-        <button
-          type="button"
-          className="text-button"
-          aria-pressed={alertsEnabled}
-          onClick={() => setTimer((current) => ({ ...current, alertsEnabled: !current.alertsEnabled }))}
-        >
-          Alerts {alertsEnabled ? 'on' : 'muted'}
-        </button>
-        <button type="button" className="text-button" onClick={enableNotifications} disabled={notificationsEnabled}>
-          {notificationsEnabled ? 'Notifications on' : 'Enable notifications'}
-        </button>
+      <section className="settings-panel" aria-labelledby="settings-title">
+        <div className="settings-heading">
+          <div>
+            <h2 id="settings-title">Session settings</h2>
+            <p>Breaks and notifications</p>
+          </div>
+          <span className="cycle-count">{weeklySessions.length} focus sessions in the last 7 days</span>
+        </div>
+        <div className="focus-options" aria-label="Timer options">
+          <label className="option-toggle">
+            <input type="checkbox" checked={cycleEnabled} onChange={toggleCycle} disabled={running} />
+            <span>Auto break after focus</span>
+          </label>
+          <label className="break-length">
+            <span>Break length</span>
+            <input
+              type="number"
+              min="1"
+              max="60"
+              value={breakMinutes}
+              onChange={updateBreakMinutes}
+              disabled={!cycleEnabled || running || phase === 'break'}
+              aria-label="Break length in minutes"
+            />
+            <span>min</span>
+          </label>
+          <button
+            type="button"
+            className="text-button"
+            aria-pressed={alertsEnabled}
+            onClick={() => setTimer((current) => ({ ...current, alertsEnabled: !current.alertsEnabled }))}
+          >
+            Alerts {alertsEnabled ? 'on' : 'muted'}
+          </button>
+          <button type="button" className="text-button" onClick={enableNotifications} disabled={notificationsEnabled}>
+            {notificationsEnabled ? 'Notifications on' : 'Enable notifications'}
+          </button>
+        </div>
       </section>
 
       <section className="focus-data" aria-label="Focus summary">
@@ -547,12 +597,36 @@ function App() {
         ) : (
           <ul>
             {recentSessions.map((session) => (
-              <li key={session.id}>
-                <span className="history-task">{session.task}</span>
-                <span className="history-duration">{session.duration} min</span>
-                <time dateTime={session.completedAt}>
-                  {new Date(session.completedAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
-                </time>
+              <li key={session.id} className={editingSessionId === session.id ? 'is-editing' : ''}>
+                {editingSessionId === session.id ? (
+                  <form className="history-edit-form" onSubmit={(event) => saveEditedTask(event, session.id)}>
+                    <input
+                      autoFocus
+                      value={editedTask}
+                      onChange={(event) => setEditedTask(event.target.value)}
+                      aria-label="Edit completed task"
+                      maxLength="120"
+                    />
+                    <button type="submit" className="history-action">Save</button>
+                    <button type="button" className="history-action" onClick={cancelEditingSession}>Cancel</button>
+                  </form>
+                ) : (
+                  <>
+                    <span className="history-task">{session.task}</span>
+                    <span className="history-duration">{session.duration} min</span>
+                    <time dateTime={session.completedAt}>
+                      {new Date(session.completedAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
+                    </time>
+                    <button
+                      type="button"
+                      className="history-action"
+                      onClick={() => beginEditingSession(session)}
+                      aria-label={`Edit task: ${session.task}`}
+                    >
+                      Edit
+                    </button>
+                  </>
+                )}
               </li>
             ))}
           </ul>

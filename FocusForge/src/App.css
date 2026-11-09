@@ -565,13 +565,40 @@
   font-size: 0.78rem;
 }
 
+.settings-panel {
+  margin-top: 20px;
+  padding: 18px 20px;
+  border: 1px solid var(--border);
+  background: var(--background);
+}
+
+.settings-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.settings-heading h2 {
+  margin: 0;
+  color: var(--ink);
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.settings-heading p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 0.74rem;
+}
+
 .focus-options {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   gap: 12px 24px;
-  padding: 16px 0;
-  border-bottom: 1px solid var(--border);
+  padding-top: 18px;
 }
 
 .option-toggle,
@@ -645,13 +672,46 @@
 .session-history li {
   min-width: 0;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto auto;
+  grid-template-columns: minmax(0, 1fr) auto auto auto;
   align-items: center;
   gap: 16px;
   padding: 12px 14px;
   color: var(--muted);
   background: var(--background);
   font-size: 0.78rem;
+}
+
+.session-history li.is-editing {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.history-edit-form {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.history-edit-form input {
+  min-width: 0;
+  flex: 1;
+  height: 36px;
+  padding: 0 8px;
+  color: var(--ink);
+  border: 1px solid var(--border);
+  background: var(--background);
+  font: inherit;
+}
+
+.history-action {
+  padding: 5px 8px;
+  color: var(--ink);
+  border: 1px solid var(--border);
+  background: var(--background);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.72rem;
+  white-space: nowrap;
 }
 
 .history-task {
@@ -673,7 +733,7 @@
 
 .focusforge.is-running .keyboard-hint,
 .focusforge.is-running .status-message,
-.focusforge.is-running .focus-options,
+.focusforge.is-running .settings-panel,
 .focusforge.is-running .session-history {
   display: none;
 }
@@ -681,6 +741,12 @@
 @media (max-width: 760px) {
   .keyboard-hint {
     font-size: 0.64rem;
+  }
+
+  .settings-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
   }
 
   .focus-options {
@@ -710,5 +776,17 @@
   .focus-options {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .settings-panel {
+    padding: 16px;
+  }
+
+  .history-edit-form {
+    flex-wrap: wrap;
+  }
+
+  .history-edit-form input {
+    flex-basis: 100%;
   }
 }
