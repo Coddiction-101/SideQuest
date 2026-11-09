@@ -572,19 +572,6 @@
   }
 }
 
-.keyboard-hint {
-  color: var(--muted);
-  font-size: 0.72rem;
-}
-
-.keyboard-hint kbd {
-  margin-left: 10px;
-  padding: 2px 6px;
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  font: inherit;
-}
-
 .status-message {
   min-height: 1.3em;
   margin: 0;
@@ -785,7 +772,6 @@
   font-size: 0.8rem;
 }
 
-.focusforge.is-running .keyboard-hint,
 .focusforge.is-running .status-message,
 .focusforge.is-running .settings-panel,
 .focusforge.is-running .progress-panel {
@@ -793,10 +779,6 @@
 }
 
 @media (max-width: 760px) {
-  .keyboard-hint {
-    font-size: 0.64rem;
-  }
-
   .settings-heading {
     align-items: flex-start;
     flex-direction: column;
@@ -814,11 +796,6 @@
 }
 
 @media (max-width: 380px) {
-  .keyboard-hint {
-    max-width: 120px;
-    text-align: right;
-  }
-
   .focus-data {
     grid-template-columns: 1fr 1fr;
   }

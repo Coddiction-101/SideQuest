@@ -316,24 +316,6 @@ function App() {
     }))
   }
 
-  useEffect(() => {
-    const onKeyDown = (event) => {
-      if (event.altKey || event.ctrlKey || event.metaKey || event.repeat) return
-      const target = event.target
-      if (target instanceof HTMLElement && target.closest('input, textarea, select, button, a, [contenteditable="true"]')) return
-
-      if (event.code === 'Space') {
-        event.preventDefault()
-        toggleTimer()
-      } else if (event.key.toLowerCase() === 'r') {
-        resetTimer()
-      }
-    }
-
-    window.addEventListener('keydown', onKeyDown)
-    return () => window.removeEventListener('keydown', onKeyDown)
-  })
-
   const chooseDuration = (duration) => {
     setTimer((current) => ({
       ...current,
@@ -456,7 +438,6 @@ function App() {
         <a className="brand" href={import.meta.env.BASE_URL} aria-label="FocusForge home">
           <span>FocusForge</span>
         </a>
-        <span className="keyboard-hint">Space: start/pause <kbd>R</kbd>: reset</span>
       </header>
 
       <section className="session-layout" aria-labelledby="session-title">
@@ -527,10 +508,10 @@ function App() {
           />
           <button type="button" onClick={applyCustomDuration} disabled={running || phase === 'break'}>Set</button>
         </div>
-        <button className="start-button" type="button" onClick={toggleTimer} aria-keyshortcuts="Space">
+        <button className="start-button" type="button" onClick={toggleTimer}>
           {running ? (phase === 'break' ? 'Pause break' : 'Pause') : phase === 'break' ? 'Start break' : secondsLeft === 0 ? 'Start again' : 'Start focus'}
         </button>
-        <button className="reset-button" type="button" onClick={resetTimer} aria-keyshortcuts="R">Reset</button>
+        <button className="reset-button" type="button" onClick={resetTimer}>Reset</button>
       </div>
 
       <p className="status-message" role="status">{statusMessage}</p>
